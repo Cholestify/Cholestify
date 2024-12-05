@@ -1,0 +1,86 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:padding="16dp"
+    android:layout_marginHorizontal="12dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Konten dengan ScrollView -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <!-- Item 1 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/green"
+                    android:padding="12dp"
+                    android:layout_marginVertical="8dp">
+
+                    <!-- Text -->
+                    <TextView
+                        android:id="@+id/tv_item_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/poppins"
+                        android:text="Ayam"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <!-- Checkbox -->
+                    <CheckBox
+                        android:id="@+id/checkbox_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/white"
+                        android:checked="true" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+
+
+<!--    &lt;!&ndash; Toolbar &ndash;&gt;-->
+<!--<LinearLayout-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:orientation="horizontal"-->
+<!--android:gravity="center_vertical"-->
+<!--android:paddingVertical="8dp">-->
+
+<!--<ImageView-->
+<!--    android:layout_width="24dp"-->
+<!--    android:layout_height="24dp"-->
+<!--    android:src="@drawable/ic_arrow_back"-->
+<!--    android:contentDescription="@string/back"-->
+<!--    android:layout_marginEnd="8dp" />-->
+
+<!--<TextView-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:fontFamily="@font/poppins_bold"-->
+<!--    android:text="UPDATE DAILY FOOD"-->
+<!--    android:textColor="@color/black"-->
+<!--    android:textSize="18sp"-->
+<!--    android:textStyle="bold"-->
+<!--    android:gravity="center"/>  &lt;!&ndash; Agar teks berada di tengah &ndash;&gt;-->
+<!--</LinearLayout>-->

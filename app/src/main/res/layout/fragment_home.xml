@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F1F1F3"
+    android:foregroundTint="#F1F1F3"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.home.HomeFragment">
+
+    <View
+        android:id="@+id/halfCircleBackground"
+        android:layout_width="600dp"
+        android:layout_height="400dp"
+        android:background="@drawable/background_half_circle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:padding="16dp"
+        android:clipToPadding="false"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/halfCircleBackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:background="@null"
+            android:paddingBottom="65dp">
+            <!-- Title -->
+            <!-- Input Section -->
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Cholestify"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:elevation="4dp"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded_background">
+
+                <!-- EditText di kiri -->
+                <EditText
+                    android:id="@+id/inputCholesterol"
+                    android:layout_width="248dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="#000000"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="center_vertical"
+                    android:hint="Input Your Value"
+                    android:inputType="number"
+                    android:padding="12dp" />
+
+                <!-- Button di kanan dengan drawable -->
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/check"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_background"
+                android:orientation="horizontal"
+                android:elevation="4dp"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp">
+
+                <!-- Ikon -->
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="12dp"
+                    android:src="@drawable/cardiogram"
+                    android:tint="#BAB7B7"/>
+
+                <!-- Kontainer Teks -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    >
+
+                    <!-- Teks "DANGEROUS" -->
+                    <TextView
+                        android:id="@+id/dangerText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="DANGEROUS"
+                        android:textColor="#FF0000"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <!-- Teks Peringatan -->
+                    <TextView
+                        android:id="@+id/warningText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:text="Your shouldn't consume cholesterol > 300 mg"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/poppins"
+                        android:layout_marginTop="4dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Daily Nutrition Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_background"
+                android:elevation="4dp"
+                android:padding="16dp"
+                android:orientation="vertical"
+                android:layout_marginBottom="16dp">
+
+                <!-- LinearLayout untuk ikon dan teks sejajar -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/_4_hour_daily_service"
+                        android:layout_marginEnd="8dp"
+                        android:tint="#BAB7B7"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Your Daily Nutrition"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <!-- Nutritional Data -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="16dp"
+                    android:weightSum="4">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="100mg\nProtein"
+                        android:fontFamily="@font/poppins"
+                        android:gravity="center"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="150mg\nFat"
+                        android:fontFamily="@font/poppins"
+                        android:gravity="center"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="20mg\nCarbo"
+                        android:fontFamily="@font/poppins"
+                        android:gravity="center"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="98mg\nTotal Cal"
+                        android:fontFamily="@font/poppins"
+                        android:gravity="center"
+                        android:textColor="#000000" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Food Recommendation Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_background"
+                android:elevation="4dp"
+                android:padding="16dp"
+                android:orientation="vertical"
+                android:layout_marginBottom="16dp">
+
+                <!-- Baris Ikon dan Teks -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <!-- Ikon -->
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/eat"
+                        android:tint="#BAB7B7"/>
+
+                    <!-- Teks Food Recommendation -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Food Recommendation:"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <!-- Daftar Makanan -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Soup"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ayam"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Apel"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <!-- Update Daily Food Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_background"
+                android:elevation="4dp"
+                android:padding="16dp"
+                android:orientation="vertical"
+                android:layout_marginBottom="16dp">
+
+                <!-- Layout untuk ikon dan teks sejajar -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/apple"
+                        android:layout_marginEnd="8dp"
+                        android:tint="#BAB7B7"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="I Have eaten!"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="#000000"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="120 Calories"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginTop="4dp"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Soup"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ayam"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Apel"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginTop="8dp" />
+
+                <Button
+                    android:id="@+id/update_daily_food"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="#4CAF50"
+                    android:text="Update Daily Food"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/white"
+                    app:cornerRadius="25dp" />
+            </LinearLayout>
+
+            <!-- Daily Food Record Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_background"
+                android:elevation="4dp"
+                android:padding="16dp"
+                android:orientation="vertical"
+                android:layout_marginBottom="16dp">
+
+                <!-- LinearLayout untuk ikon dan teks sejajar -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/diet"
+                        android:layout_marginEnd="8dp"
+                        android:tint="#BAB7B7"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Daily Food Record"
+                        android:fontFamily="@font/poppins_bold"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <!-- Data Nutrisi -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Karbohidrat: 0"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginTop="8dp"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Protein: 0"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginTop="8dp"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sat Fat: 0"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginTop="8dp"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cholesterol: 0"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginTop="8dp"
+                    android:textColor="#000000" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

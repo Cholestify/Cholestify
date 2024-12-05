@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Cholestify</string>
+    <string name="title_home">Home</string>
+    <string name="title_profile">Profile</string>
+    <string name="profile_picture">Profile Picture</string>
+
+    <!--    Profile-->
+    <string name="first_name">What’s your first name?</string>
+    <string name="last_name">What’s your last name?</string>
+    <string name="phone_number">Phone number</string>
+    <string name="date_of_birth">What is your date of birth?</string>
+    <string name="gender">Select your gender</string>
+
+    <!--    Personal Nutrition-->
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
+    <string name="bmi">BMI</string>
+    <string name="activity_factor">Select your activity factor</string>
+    <string name="back">Back</string>
+
+    <!--    Update Profile-->
+    <string name="update_profile">Update Profile</string>
+    <string name="Input">Input</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
