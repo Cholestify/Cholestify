@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.cholestifyapp.data.response.DataItem
-import com.example.cholestifyapp.data.response.ResponseFood
+import com.example.cholestifyapp.data.response.FoodResponse
 import com.example.cholestifyapp.data.retrofit.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,8 +28,8 @@ class UpdateViewModel: ViewModel() {
     val message: LiveData<String> = _message
 
     companion object {
-        private const val TAG = "UpdateDood"
-        private const val ListFood = 1 // ID khusus untuk mendeteksi
+        private const val TAG = "UpdateFoof"
+//        private const val ListFood = 1 // ID khusus untuk mendeteksi
     }
 
 
@@ -39,11 +39,11 @@ class UpdateViewModel: ViewModel() {
 
     private fun ListUpdateFood() {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getFood(ListFood)
-        client.enqueue(object : Callback<ResponseFood> {
+        val client = ApiConfig.getApiService().getAllFood()
+        client.enqueue(object : Callback<FoodResponse> {
             override fun onResponse(
-                call: Call<ResponseFood>,
-                response: Response<ResponseFood>
+                call: Call<FoodResponse>,
+                response: Response<FoodResponse>
             ) {
                 _isLoading.value = false
                 if (response.isSuccessful) {
@@ -54,11 +54,12 @@ class UpdateViewModel: ViewModel() {
                         Log.w(TAG, "onResponse: ${_dataItem.value}")
                     }
                 } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
-                }
+                    _error.value = true // Tandai error di UI
+                    _message.value = response.message() // Berikan pesan error
+                    Log.e(TAG, "onFailure: ${response.message()}")                }
             }
 
-            override fun onFailure(call: Call<ResponseFood>, t: Throwable) {
+            override fun onFailure(call: Call<FoodResponse>, t: Throwable) {
                 _isLoading.value = false
                 // Menangani kegagalan dengan mencatat log error
                 Log.e(TAG, "onFailure: ${t.message}")

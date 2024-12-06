@@ -2,131 +2,131 @@ package com.example.cholestifyapp.data.response
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseFood(
+data class FoodResponse(
 
 	@field:SerializedName("data")
 	val data: List<DataItem>,
 
 	@field:SerializedName("error")
-	val error: Boolean? = null,
+	val error: Boolean,
 
 	@field:SerializedName("message")
-	val message: String? = null
+	val message: String
 )
 
 data class DataItem(
 
 	@field:SerializedName("potassium")
-	val potassium: Any? = null,
+	val potassium: Any,
 
 	@field:SerializedName("manganese")
-	val manganese: Int? = null,
+	val manganese: Any,
 
 	@field:SerializedName("vitaminB1")
-	val vitaminB1: Any? = null,
+	val vitaminB1: Any,
 
 	@field:SerializedName("createdAt")
-	val createdAt: String? = null,
+	val createdAt: String,
 
 	@field:SerializedName("vitaminB2")
-	val vitaminB2: Any? = null,
+	val vitaminB2: Any,
 
 	@field:SerializedName("vitaminB3")
-	val vitaminB3: Any? = null,
+	val vitaminB3: Any,
 
 	@field:SerializedName("dietaryFiber")
-	val dietaryFiber: Int? = null,
+	val dietaryFiber: Double,
 
 	@field:SerializedName("selenium")
-	val selenium: Int? = null,
+	val selenium: Any,
 
 	@field:SerializedName("vitaminB5")
-	val vitaminB5: Int? = null,
+	val vitaminB5: Double,
 
 	@field:SerializedName("vitaminB6")
-	val vitaminB6: Any? = null,
+	val vitaminB6: Any,
 
 	@field:SerializedName("protein")
-	val protein: Any? = null,
+	val protein: Any,
 
 	@field:SerializedName("fat")
-	val fat: Any? = null,
+	val fat: Any,
 
 	@field:SerializedName("saturatedFats")
-	val saturatedFats: Any? = null,
+	val saturatedFats: Any,
 
 	@field:SerializedName("polyunsaturatedFats")
-	val polyunsaturatedFats: Int? = null,
+	val polyunsaturatedFats: Double,
 
 	@field:SerializedName("cholesterol")
-	val cholesterol: Int? = null,
+	val cholesterol: Any,
 
 	@field:SerializedName("copper")
-	val copper: Any? = null,
+	val copper: Any,
 
 	@field:SerializedName("vitaminB12")
-	val vitaminB12: Any? = null,
+	val vitaminB12: Any,
 
 	@field:SerializedName("id")
-	val id: Int? = null,
+	val id: Int,
 
 	@field:SerializedName("vitaminB11")
-	val vitaminB11: Any? = null,
+	val vitaminB11: Any,
 
 	@field:SerializedName("zinc")
-	val zinc: Any? = null,
+	val zinc: Any,
 
 	@field:SerializedName("phosphorus")
-	val phosphorus: Any? = null,
+	val phosphorus: Any,
 
 	@field:SerializedName("updatedAt")
-	val updatedAt: Any? = null,
+	val updatedAt: Any,
 
 	@field:SerializedName("carbohydrates")
-	val carbohydrates: Any? = null,
+	val carbohydrates: Any,
 
 	@field:SerializedName("sugars")
-	val sugars: Int? = null,
+	val sugars: Double?,
 
 	@field:SerializedName("calcium")
-	val calcium: Any? = null,
+	val calcium: Any,
 
 	@field:SerializedName("vitaminC")
-	val vitaminC: Any? = null,
+	val vitaminC: Any,
 
 	@field:SerializedName("vitaminE")
-	val vitaminE: Any? = null,
+	val vitaminE: Any,
 
 	@field:SerializedName("monounsaturatedFats")
-	val monounsaturatedFats: Any? = null,
+	val monounsaturatedFats: Any,
 
 	@field:SerializedName("vitaminD")
-	val vitaminD: Int? = null,
+	val vitaminD: Double,
 
 	@field:SerializedName("magnesium")
-	val magnesium: Any? = null,
+	val magnesium: Any,
 
 	@field:SerializedName("vitaminK")
-	val vitaminK: Any? = null,
+	val vitaminK: Any,
 
 	@field:SerializedName("nutritionDensity")
-	val nutritionDensity: Any? = null,
+	val nutritionDensity: Any,
 
 	@field:SerializedName("water")
-	val water: Any? = null,
+	val water: Any,
 
 	@field:SerializedName("food")
-	val food: String? = null,
+	val food: String,
 
 	@field:SerializedName("sodium")
-	val sodium: Any? = null,
+	val sodium: Any,
 
 	@field:SerializedName("caloricValue")
-	val caloricValue: Int? = null,
+	val caloricValue: Int,
 
 	@field:SerializedName("iron")
-	val iron: Any? = null,
+	val iron: Any,
 
 	@field:SerializedName("vitaminA")
-	val vitaminA: Any? = null
+	val vitaminA: Any
 )

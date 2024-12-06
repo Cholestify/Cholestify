@@ -8,10 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cholestifyapp.data.response.DataItem
 import com.example.cholestifyapp.databinding.ItemAddFoodBinding
 
-class UpdateAdapter(private val onItemClick: (DataItem) -> Unit) : ListAdapter<DataItem, UpdateAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class UpdateAdapter(private val onItemClick: (DataItem) -> Unit={}) : ListAdapter<DataItem, UpdateAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     companion object {
-
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<DataItem>() {
             override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
                 // Memeriksa apakah dua item adalah objek yang sama berdasarkan ID atau atribut unik lainnya.
@@ -27,17 +26,9 @@ class UpdateAdapter(private val onItemClick: (DataItem) -> Unit) : ListAdapter<D
 
     class MyViewHolder(private val binding: ItemAddFoodBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        /**
-         * Mengikat data `ListEventsItem` ke tampilan dalam layout item.
-         *
-         * @param item Objek `ListEventsItem` yang berisi data event.
-         * @param onItemClick Fungsi yang dipanggil ketika item diklik.
-         */
         fun bind(item: DataItem, onItemClick: (DataItem) -> Unit) {
             // Menampilkan data event pada tampilan
-            binding.tvItemName
-
-
+            binding.tvItemName.text = item.food ?: "Unknown Food"
             // Menambahkan tindakan klik pada root layout item untuk membuka detail event
             binding.root.setOnClickListener {
                 onItemClick(item)
