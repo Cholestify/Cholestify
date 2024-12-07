@@ -1,14 +1,14 @@
 package com.example.cholestifyapp.ui.profile
 
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.cholestifyapp.R
 import com.example.cholestifyapp.databinding.FragmentProfileBinding
-import com.example.cholestifyapp.ui.login.LoginFragment
 import com.example.cholestifyapp.utils.SharedPrefsHelper
 
 class ProfileFragment : Fragment() {
@@ -56,12 +56,16 @@ class ProfileFragment : Fragment() {
         sharedPrefsHelper.clearLoginStatus()
         sharedPrefsHelper.clearToken()
 
-        // Arahkan ke halaman login setelah logout
-        val intent = Intent(requireContext(), LoginFragment::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK // Menghapus aktivitas sebelumnya
-        startActivity(intent)
+        // Dapatkan NavController dari graf yang sesuai
+        val navController = findNavController()
 
-        // Tutup aktivitas saat ini
+        // Ganti graf ke auth_nav_graph untuk menuju ke LoginFragment
+        navController.setGraph(R.navigation.auth_nav_graph)
+
+        // Navigasi ke LoginFragment
+        navController.navigate(R.id.loginFragment) // Menavigasi langsung ke LoginFragment
+
+        // Menutup aktivitas atau fragment
         requireActivity().finish()
     }
 

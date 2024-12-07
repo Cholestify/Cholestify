@@ -9,18 +9,33 @@
         android:id="@+id/navigation_home"
         android:name="com.example.cholestifyapp.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_profile"
+            app:destination="@id/fragment_profile" />
+        <action
+            android:id="@+id/action_navigation_home_to_update_daily_food"
+            app:destination="@id/update_daily_food" />
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_profile"
+        android:id="@+id/fragment_profile"
         android:name="com.example.cholestifyapp.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
 
     <fragment
         android:id="@+id/update_daily_food"
         android:name="com.example.cholestifyapp.ui.updateDaily.UpdateDaily"
         android:label="Update Daily Food"
-        tools:layout="@layout/fragment_update_daily" />
+        tools:layout="@layout/fragment_update_daily" >
+        <action
+            android:id="@+id/action_update_daily_food_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
 
 </navigation>
