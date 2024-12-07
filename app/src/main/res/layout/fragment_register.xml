@@ -50,15 +50,6 @@
         android:inputType="textPassword"
         android:visibility="visible" />
 
-    <EditText
-        android:id="@+id/editTextConfirmPassword"
-        android:layout_width="330dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:ems="10"
-        android:hint="Confirm Password"
-        android:inputType="textPassword" />
-
     <Button
         android:id="@+id/sign_up_btn"
         android:layout_width="300dp"

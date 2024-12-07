@@ -1,18 +1,23 @@
 package com.example.cholestifyapp.utils
 
 import android.content.Context
-import android.content.SharedPreferences
 
 class SharedPrefsHelper(context: Context) {
-    private val sharedPreferences: SharedPreferences = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+    private val sharedPreferences = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
 
-    fun setLoginStatus(isLoggedIn: Boolean) {
-        val editor = sharedPreferences.edit()
-        editor.putBoolean("IS_LOGGED_IN", isLoggedIn)
-        editor.apply()
+    fun setLoginStatus(status: Boolean) {
+        sharedPreferences.edit().putBoolean("isLoggedIn", status).apply()
     }
 
-    fun getLoginStatus(): Boolean {
-        return sharedPreferences.getBoolean("IS_LOGGED_IN", false)
+    fun isLoggedIn(): Boolean {
+        return sharedPreferences.getBoolean("isLoggedIn", false)
+    }
+
+    fun saveToken(token: String) {
+        sharedPreferences.edit().putString("authToken", token).apply()
+    }
+
+    fun getToken(): String? {
+        return sharedPreferences.getString("authToken", null)
     }
 }

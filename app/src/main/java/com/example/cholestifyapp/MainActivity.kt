@@ -8,10 +8,12 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.cholestifyapp.databinding.ActivityMainBinding
+import com.example.cholestifyapp.utils.SharedPrefsHelper
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var sharedPrefsHelper: SharedPrefsHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,11 +22,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Initialize SharedPreferences helper
+        sharedPrefsHelper = SharedPrefsHelper(this)
+
         // Find the NavHostFragment
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
-
-        // Get the NavController from the NavHostFragment
         val navController: NavController = navHostFragment.navController
+
+        if (!sharedPrefsHelper.isLoggedIn()) {
+            navController.setGraph(R.navigation.auth_nav_graph) // Gunakan navigasi login
+        } else {
+            navController.setGraph(R.navigation.main_nav_graph) // Gunakan navigasi utama
+        }
 
         // Set up the BottomNavigationView with the NavController
         val navView: BottomNavigationView = binding.navView

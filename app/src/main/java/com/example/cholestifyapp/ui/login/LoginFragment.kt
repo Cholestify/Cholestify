@@ -32,7 +32,7 @@ class LoginFragment : Fragment() {
 
         emailEditText = rootView.findViewById(R.id.editTextTextEmailAddress)
         passwordEditText = rootView.findViewById(R.id.editTextTextPassword)
-        loginButton = rootView.findViewById(R.id.button)
+        loginButton = rootView.findViewById(R.id.buttonlogin)
 
         // Inisialisasi SharedPrefsHelper
         sharedPrefsHelper = SharedPrefsHelper(requireContext())
@@ -60,17 +60,18 @@ class LoginFragment : Fragment() {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful && response.body() != null) {
                     val loginResponse = response.body()
-                    if (loginResponse?.status == "success") {
-                        // Login berhasil, simpan status login
-                        sharedPrefsHelper.setLoginStatus(true)
+                    if (loginResponse != null && !loginResponse.error) {
+                        // Login berhasil, simpan token ke SharedPreferences
+                        val token = loginResponse.data?.token ?: ""
+                        sharedPrefsHelper.saveToken(token)
 
                         // Menampilkan Toast untuk sukses
-                        Toast.makeText(activity, "Login successful!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, loginResponse.message, Toast.LENGTH_SHORT).show()
 
                         // Pindahkan pengguna ke halaman utama
                         findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                     } else {
-                        Toast.makeText(activity, "Login failed: ${loginResponse?.status}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "Login failed: ${loginResponse?.message}", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     Toast.makeText(activity, "Error: ${response.code()}", Toast.LENGTH_SHORT).show()

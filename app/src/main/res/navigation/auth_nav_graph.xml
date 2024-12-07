@@ -1,32 +1,38 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    android:id="@+id/auth_nav_graph"
+    app:startDestination="@id/loginFragment">
 
+    <!-- Login Fragment -->
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.cholestifyapp.ui.login.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login">
+
+        <!-- Action to HomeFragment -->
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+
+        <!-- Action to RegisterFragment -->
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
     </fragment>
 
+    <!-- Register Fragment -->
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.cholestifyapp.ui.register.RegisterFragment"
+        android:label="Register"
+        tools:layout="@layout/fragment_register" />
+
+    <!-- Home Fragment -->
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.cholestifyapp.ui.home.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/update_daily_food"
-            app:destination="@id/updateDailyFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/updateDailyFragment"
-        android:name="com.example.cholestifyapp.ui.updateDaily.UpdateDaily"
-        android:label="Update Daily"
-        tools:layout="@layout/fragment_update_daily" />
+        tools:layout="@layout/fragment_home" />
 </navigation>

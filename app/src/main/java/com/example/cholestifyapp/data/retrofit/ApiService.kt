@@ -15,7 +15,7 @@ interface ApiService {
     @GET("food")
     fun getAllFood(): Call<FoodResponse>
 
-    @POST("/login")
+    @POST("login")
     fun login(@Body request: LoginRequest): Call<LoginResponse>
 
     @POST("/register")
