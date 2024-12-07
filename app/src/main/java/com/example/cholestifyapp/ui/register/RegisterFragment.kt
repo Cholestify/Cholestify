@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.cholestifyapp.R
 import com.example.cholestifyapp.data.retrofit.ApiService
 import com.example.cholestifyapp.data.retrofit.RetrofitClient
@@ -17,10 +18,10 @@ import retrofit2.Response
 
 class RegisterFragment : Fragment() {
 
-    private lateinit var fullNameEditText: EditText
+    private lateinit var nameEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
-    private lateinit var signUpButton: Button
+    private lateinit var registerButton: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,38 +29,42 @@ class RegisterFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_register, container, false)
 
-        fullNameEditText = rootView.findViewById(R.id.editTextText)
-        emailEditText = rootView.findViewById(R.id.editTextTextEmailAddress)
-        passwordEditText = rootView.findViewById(R.id.editTextTextPassword)
-        signUpButton = rootView.findViewById(R.id.sign_up_btn)
+        // Inisialisasi view
+        nameEditText = rootView.findViewById(R.id.editTextTextRegist)
+        emailEditText = rootView.findViewById(R.id.EmailAddressRegist)
+        passwordEditText = rootView.findViewById(R.id.TextPasswordRegist)
+        registerButton = rootView.findViewById(R.id.sign_up_btn)
 
-        signUpButton.setOnClickListener {
-            val fullName = fullNameEditText.text.toString()
-            val email = emailEditText.text.toString()
-            val password = passwordEditText.text.toString()
+        registerButton.setOnClickListener {
+            val name = nameEditText.text.toString().trim()
+            val email = emailEditText.text.toString().trim()
+            val password = passwordEditText.text.toString().trim()
 
-            if (fullName.isEmpty() || email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(activity, "All fields are required", Toast.LENGTH_SHORT).show()
+            if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(activity, "Name, Email, and Password are required", Toast.LENGTH_SHORT).show()
             } else {
-                registerUser(fullName, email, password)
+                registerUser(name, email, password)
             }
         }
 
         return rootView
     }
 
-    private fun registerUser(fullName: String, email: String, password: String) {
+    private fun registerUser(name: String, email: String, password: String) {
         val apiService = RetrofitClient.instance.create(ApiService::class.java)
-        val request = RegisterRequest(fullName, email, password)
+        val request = RegisterRequest(name, email, password)
         val call = apiService.register(request)
 
         call.enqueue(object : Callback<RegisterResponse> {
             override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
                 if (response.isSuccessful && response.body() != null) {
                     val registerResponse = response.body()
-                    if (registerResponse?.status == "success") {
-                        Toast.makeText(activity, "Registration successful!", Toast.LENGTH_SHORT).show()
-                        // Lakukan tindakan setelah pendaftaran berhasil, misalnya, buka login fragment atau activity baru.
+                    if (registerResponse != null && !registerResponse.error) {
+                        // Menampilkan Toast untuk sukses
+                        Toast.makeText(activity, registerResponse.message, Toast.LENGTH_SHORT).show()
+
+                        // Pindahkan pengguna ke login atau halaman utama
+                        findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
                     } else {
                         Toast.makeText(activity, "Registration failed: ${registerResponse?.message}", Toast.LENGTH_SHORT).show()
                     }

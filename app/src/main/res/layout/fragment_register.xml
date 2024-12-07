@@ -25,15 +25,15 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/editTextTextRegist"
         android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:text="Full Name" />
+        android:hint="Name"/>
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/EmailAddressRegist"
         android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -41,7 +41,7 @@
         android:inputType="textEmailAddress" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/TextPasswordRegist"
         android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:ems="10"

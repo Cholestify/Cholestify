@@ -22,6 +22,7 @@ class LoginFragment : Fragment() {
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
+    private lateinit var registerButton: Button
     private lateinit var sharedPrefsHelper: SharedPrefsHelper
 
     override fun onCreateView(
@@ -30,22 +31,31 @@ class LoginFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_login, container, false)
 
+        // Inisialisasi view
         emailEditText = rootView.findViewById(R.id.editTextTextEmailAddress)
         passwordEditText = rootView.findViewById(R.id.editTextTextPassword)
         loginButton = rootView.findViewById(R.id.buttonlogin)
+        registerButton = rootView.findViewById(R.id.buttonregist) // Pastikan ID ini sesuai dengan layout XML
 
         // Inisialisasi SharedPrefsHelper
         sharedPrefsHelper = SharedPrefsHelper(requireContext())
 
+        // Tombol Login
         loginButton.setOnClickListener {
-            val email = emailEditText.text.toString()
-            val password = passwordEditText.text.toString()
+            val email = emailEditText.text.toString().trim()
+            val password = passwordEditText.text.toString().trim()
 
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(activity, "Email and password are required", Toast.LENGTH_SHORT).show()
             } else {
                 loginUser(email, password)
             }
+        }
+
+        // Tombol Register
+        registerButton.setOnClickListener {
+            // Pindah ke RegisterFragment
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
 
         return rootView

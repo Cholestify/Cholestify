@@ -27,7 +27,13 @@
         android:id="@+id/registerFragment"
         android:name="com.example.cholestifyapp.ui.register.RegisterFragment"
         android:label="Register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register">
+
+        <!-- Action to LoginFragment (after successful registration) -->
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 
     <!-- Home Fragment -->
     <fragment
