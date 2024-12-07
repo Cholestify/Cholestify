@@ -15,7 +15,13 @@
     </fragment>
 
     <fragment
-        android:id="@+id/updateDailyFragment"
+        android:id="@+id/navigation_profile"
+        android:name="com.example.cholestifyapp.ui.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@id/updateDailyFragment"
         android:name="com.example.cholestifyapp.ui.updateDaily.UpdateDaily"
         android:label="Update Daily"
         tools:layout="@layout/fragment_update_daily" />

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.cholestifyapp.databinding.ActivityMainBinding
 import com.example.cholestifyapp.utils.SharedPrefsHelper
@@ -44,13 +45,18 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
         navView.setupWithNavController(navController)
 
+
         // Optionally, set up the AppBar with navigation
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_profile
+                R.id.navigation_home,
+                R.id.navigation_profile
             )
         )
         // If you have an action bar, set up navigation with it
-        // setupActionBarWithNavController(navController, appBarConfiguration)
+//        setupActionBarWithNavController(navController, appBarConfiguration)
+
     }
+
+
 }
