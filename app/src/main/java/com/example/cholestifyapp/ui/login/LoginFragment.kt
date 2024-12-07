@@ -73,7 +73,7 @@ class LoginFragment : Fragment() {
                     if (loginResponse != null && !loginResponse.error) {
                         // Login berhasil, simpan token ke SharedPreferences
                         val token = loginResponse.data?.token ?: ""
-                        sharedPrefsHelper.saveToken(token)
+                        sharedPrefsHelper.saveToken(token) // Simpan token
 
                         // Menampilkan Toast untuk sukses
                         Toast.makeText(activity, loginResponse.message, Toast.LENGTH_SHORT).show()

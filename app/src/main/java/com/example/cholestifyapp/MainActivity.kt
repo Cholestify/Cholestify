@@ -29,9 +29,14 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         val navController: NavController = navHostFragment.navController
 
-        if (!sharedPrefsHelper.isLoggedIn()) {
+        // Periksa apakah token ada untuk memutuskan apakah pengguna sudah login
+        val token = sharedPrefsHelper.getToken()
+
+        if (token.isNullOrEmpty()) {
+            // Jika token tidak ada atau kosong, navigasi ke layar login
             navController.setGraph(R.navigation.auth_nav_graph) // Gunakan navigasi login
         } else {
+            // Jika token ada, artinya pengguna sudah login, navigasi ke layar utama
             navController.setGraph(R.navigation.main_nav_graph) // Gunakan navigasi utama
         }
 
