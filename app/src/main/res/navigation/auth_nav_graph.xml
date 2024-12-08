@@ -10,13 +10,9 @@
         android:name="com.example.cholestifyapp.ui.login.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login">
-
-        <!-- Action to HomeFragment -->
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
-
-        <!-- Action to RegisterFragment -->
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
@@ -28,8 +24,6 @@
         android:name="com.example.cholestifyapp.ui.register.RegisterFragment"
         android:label="Register"
         tools:layout="@layout/fragment_register">
-
-        <!-- Action to LoginFragment (after successful registration) -->
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -40,10 +34,21 @@
         android:id="@+id/homeFragment"
         android:name="com.example.cholestifyapp.ui.home.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_updateDailyFragment"
-            app:destination="@id/updateDailyFragment" />
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+
+    <!-- Profile Fragment -->
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.cholestifyapp.ui.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
 
 </navigation>

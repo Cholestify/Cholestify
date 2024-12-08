@@ -4,16 +4,23 @@
     android:id="@+id/main_nav_graph"
     app:startDestination="@id/homeFragment">
 
+    <!-- Home Fragment -->
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.cholestifyapp.ui.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home">
+        <!-- Navigasi ke Update Daily -->
         <action
-            android:id="@+id/update_daily_food"
+            android:id="@+id/action_homeFragment_to_updateDailyFragment"
             app:destination="@id/updateDailyFragment" />
+        <!-- Navigasi ke Profile -->
+        <action
+            android:id="@+id/action_homeFragment_to_fragment_profile"
+            app:destination="@id/fragment_profile" />
     </fragment>
 
+    <!-- Update Daily Fragment -->
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.example.cholestifyapp.ui.profile.ProfileFragment"
@@ -24,5 +31,23 @@
         android:id="@id/updateDailyFragment"
         android:name="com.example.cholestifyapp.ui.updateDaily.UpdateDaily"
         android:label="Update Daily"
-        tools:layout="@layout/fragment_update_daily" />
+        tools:layout="@layout/fragment_update_daily">
+        <!-- Navigasi kembali ke Home -->
+        <action
+            android:id="@+id/action_updateDailyFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
+    <!-- Profile Fragment -->
+    <fragment
+        android:id="@+id/fragment_profile"
+        android:name="com.example.cholestifyapp.ui.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile">
+        <!-- Navigasi dari Profile ke Home -->
+        <action
+            android:id="@+id/action_profileFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
 </navigation>

@@ -21,6 +21,7 @@
     <!--    Update Profile-->
     <string name="update_profile">Update Profile</string>
     <string name="Input">Input</string>
+    <string name="LogOut">Log Out</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
