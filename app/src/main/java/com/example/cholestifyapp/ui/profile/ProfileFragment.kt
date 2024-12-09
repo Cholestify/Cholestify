@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.cholestifyapp.R
@@ -28,6 +29,9 @@ class ProfileFragment : Fragment() {
 
         // Inisialisasi SharedPrefsHelper
         sharedPrefsHelper = SharedPrefsHelper(requireContext())
+
+        // Panggil API untuk mendapatkan profil pengguna
+        fetchUserProfile()
 
         // Tampilkan data profil saat pertama kali fragment dimuat
         loadUserProfile()
@@ -76,7 +80,8 @@ class ProfileFragment : Fragment() {
                     val user = response.body()!!.data
 
                     // Simpan profil yang diperbarui
-                    sharedPrefsHelper.saveUserProfile(profileRequest)
+                    sharedPrefsHelper.saveUserProfile(profileRequest
+                    )
 
                     // Perbarui UI
                     loadUserProfile()
@@ -109,6 +114,48 @@ class ProfileFragment : Fragment() {
             edBMI.setText(userProfile.bmi.toString())
         }
     }
+
+    private fun fetchUserProfile() {
+        val token = sharedPrefsHelper.getToken() ?: ""
+        val apiService = ApiConfig.getApiService()
+
+        apiService.getUserProfile("Bearer $token").enqueue(object : retrofit2.Callback<UserResponse> {
+            override fun onResponse(
+                call: retrofit2.Call<UserResponse>,
+                response: retrofit2.Response<UserResponse>
+            ) {
+                if (response.isSuccessful && response.body() != null) {
+                    val userProfile = response.body()!!.data
+
+                    // Simpan ID pengguna ke SharedPreferences
+                    sharedPrefsHelper.saveUserId(userProfile.id)
+
+                    val userId = sharedPrefsHelper.getUserId()
+                    Log.d("User ID", "ID Pengguna: $userId")
+
+                    Toast.makeText(requireContext(), "ID Pengguna: ${userProfile.id}", Toast.LENGTH_SHORT).show()
+
+
+                    // Tampilkan data di UI
+                    binding?.apply {
+                        tvProfileName.text = userProfile.name
+                        tvProfileEmail.text = userProfile.email
+                    }
+
+                    Log.d("UserProfile", "ID: ${userProfile.id}")
+                    Log.d("UserProfile", "Nama: ${userProfile.name}")
+
+                } else {
+                    Log.e("UserProfile", "Gagal mendapatkan profil: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: retrofit2.Call<UserResponse>, t: Throwable) {
+                Log.e("UserProfile", "Kesalahan jaringan: ${t.message}")
+            }
+        })
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

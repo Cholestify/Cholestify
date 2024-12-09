@@ -36,6 +36,15 @@ class SharedPrefsHelper(context: Context) {
         sharedPreferences.edit().remove("isLoggedIn").apply()
     }
 
+//    Save Id
+    fun saveUserId(userId: Int) {
+        sharedPreferences.edit().putInt("userId", userId).apply()
+    }
+
+    fun getUserId(): Int {
+        return sharedPreferences.getInt("userId", -1) // -1 jika tidak ditemukan
+    }
+
 
 
     fun saveUserProfile(profile: UpdateProfileRequest) {

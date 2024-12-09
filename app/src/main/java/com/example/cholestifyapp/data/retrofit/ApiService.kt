@@ -11,6 +11,7 @@ import com.example.cholestifyapp.ui.register.RegisterResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface ApiService {
@@ -25,5 +26,11 @@ interface ApiService {
 
     @POST("updateProfile")
     fun updateProfile(@Body profile: UpdateProfileRequest): Call<UserResponse>
+
+    @GET("users")
+    fun getUserProfile(
+        @Header("Authorization") token: String
+    ): Call<UserResponse>
+
 
 }

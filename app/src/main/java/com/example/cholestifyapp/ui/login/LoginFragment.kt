@@ -71,6 +71,11 @@ class LoginFragment : Fragment() {
                         val token = loginResponse.data?.token ?: ""
                         sharedPrefsHelper.saveToken(token)
                         showToast(loginResponse.message)
+
+                        val idUser = loginResponse.data?.userId ?: ""
+                        sharedPrefsHelper.saveUserId(idUser as Int)
+
+
                         findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                     } else {
                         showToast("Login failed: ${loginResponse?.message}")
