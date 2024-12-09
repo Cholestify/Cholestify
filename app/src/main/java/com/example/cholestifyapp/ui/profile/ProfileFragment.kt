@@ -34,20 +34,6 @@ class ProfileFragment : Fragment() {
 
         binding?.btnUpdateProfile?.setOnClickListener { updateProfile() }
 
-        // Menampilkan data pengguna (contoh)
-        binding!!.ivProfilePicture.setImageResource(R.drawable.ic_person)
-        binding!!.tvProfileName.text = "lOREM IPSUM 53"
-        binding!!.tvProfileEmail.text = "LOREM IPSUM 53"
-        binding!!.tvPersonalInformation.text = "Personal Information"
-        binding!!.edName.hint = ""
-        binding!!.edPhoneNumber.hint = ""
-        binding!!.edDateOfBirth.hint = ""
-        binding!!.tvPersonalNutrition.text = "Personal Nutrition"
-        binding!!.edHeight.hint = ""
-        binding!!.edWeight.hint = ""
-        binding!!.edBMI.hint = ""
-        binding!!.ActivityFactor.hint = ""
-        binding!!.btnUpdateProfile.text = "Update Profile"
 
         // Tombol Logout
         binding!!.btnLogout.setOnClickListener {

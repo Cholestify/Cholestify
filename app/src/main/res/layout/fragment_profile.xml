@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
-                android:text="Itunuoluwa Abidoye"
+                android:text="Fadel Ganteng"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -52,7 +52,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="4dp"
                 android:text="Itunuoluwa.Abidoye@gmail.com"
-                android:textColor="@color/gray"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
 
             <!-- Personal Information -->
