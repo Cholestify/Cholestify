@@ -1,6 +1,7 @@
 package com.example.cholestifyapp.utils
 
 import android.content.Context
+import com.example.cholestifyapp.ui.profile.UpdateProfileRequest
 
 class SharedPrefsHelper(context: Context) {
     private val sharedPreferences = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
@@ -34,4 +35,38 @@ class SharedPrefsHelper(context: Context) {
     fun clearLoginStatus() {
         sharedPreferences.edit().remove("isLoggedIn").apply()
     }
+
+
+
+    fun saveUserProfile(profile: UpdateProfileRequest) {
+        val editor = sharedPreferences.edit()
+        editor.putString("firstName", profile.fullName)
+//        editor.putString("lastName", profile.lastName)
+//        editor.putString("phoneNumber", profile.phoneNumber)
+        editor.putString("birthdate", profile.birthdate)
+        editor.putInt("height", profile.height)
+        editor.putInt("weight", profile.weight)
+        editor.putFloat("bmi", profile.bmi.toFloat())
+        editor.apply()
+    }
+
+    fun getUserProfile(): UpdateProfileRequest {
+        val fullName = sharedPreferences.getString("firstName", "") ?: ""
+        val birthdate = sharedPreferences.getString("birthdate", "") ?: ""
+        val height = sharedPreferences.getInt("height", 0)
+        val weight = sharedPreferences.getInt("weight", 0)
+        val bmi = sharedPreferences.getFloat("bmi", 0.0f).toDouble()
+
+        return UpdateProfileRequest(
+            fullName = fullName,
+            birthdate = birthdate,
+            height = height,
+            weight = weight,
+            bmi = bmi
+        )
+    }
+
+
+
+
 }

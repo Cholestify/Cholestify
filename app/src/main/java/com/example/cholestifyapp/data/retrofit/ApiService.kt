@@ -2,8 +2,10 @@ package com.example.cholestifyapp.data.retrofit
 
 
 import com.example.cholestifyapp.data.response.FoodResponse
+import com.example.cholestifyapp.data.response.UserResponse
 import com.example.cholestifyapp.ui.login.LoginRequest
 import com.example.cholestifyapp.ui.login.LoginResponse
+import com.example.cholestifyapp.ui.profile.UpdateProfileRequest
 import com.example.cholestifyapp.ui.register.RegisterRequest
 import com.example.cholestifyapp.ui.register.RegisterResponse
 import retrofit2.Call
@@ -20,4 +22,8 @@ interface ApiService {
 
     @POST("/register")
     fun register(@Body request: RegisterRequest): Call<RegisterResponse>
+
+    @POST("updateProfile")
+    fun updateProfile(@Body profile: UpdateProfileRequest): Call<UserResponse>
+
 }
