@@ -77,4 +77,5 @@ class MainActivity : AppCompatActivity() {
         // If you want to link AppBar with navigation, you can use:
         // setupActionBarWithNavController(navController, appBarConfiguration)
     }
+
 }

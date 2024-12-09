@@ -65,6 +65,9 @@ class ProfileFragment : Fragment() {
         // Navigasi ke LoginFragment setelah logout
         val navController = findNavController()
         navController.navigate(R.id.loginFragment) // Menavigasi langsung ke LoginFragment
+
+        // Menghapus semua fragment di back stack
+        navController.popBackStack(R.id.loginFragment, false)
     }
 
     private fun getProfileInput(): UpdateProfileRequest {
