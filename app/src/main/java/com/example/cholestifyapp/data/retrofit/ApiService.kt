@@ -13,6 +13,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 interface ApiService {
     @GET("food")
@@ -24,8 +25,12 @@ interface ApiService {
     @POST("/register")
     fun register(@Body request: RegisterRequest): Call<RegisterResponse>
 
-    @POST("updateProfile")
-    fun updateProfile(@Body profile: UpdateProfileRequest): Call<UserResponse>
+    @PUT("updateProfile")
+    fun updateProfile(
+        @Header("Authorization") token: String,
+        @Body profile: UpdateProfileRequest
+    ): Call<UserResponse>
+
 
     @GET("users")
     fun getUserProfile(

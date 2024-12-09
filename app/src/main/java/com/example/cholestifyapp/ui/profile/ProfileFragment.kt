@@ -36,13 +36,16 @@ class ProfileFragment : Fragment() {
         // Tampilkan data profil saat pertama kali fragment dimuat
         loadUserProfile()
 
-        binding?.btnUpdateProfile?.setOnClickListener { updateProfile() }
+        binding?.btnUpdateProfile?.setOnClickListener {
+            updateProfile()
+        }
 
 
         // Tombol Logout
         binding!!.btnLogout.setOnClickListener {
             logout()
         }
+
 
         return binding!!.root
     }
@@ -70,21 +73,23 @@ class ProfileFragment : Fragment() {
         )
     }
 
+
     private fun updateProfile() {
+        val token = sharedPrefsHelper.getToken() ?: ""
         val apiService = ApiConfig.getApiService()
         val profileRequest = getProfileInput()
 
-        apiService.updateProfile(profileRequest).enqueue(object : retrofit2.Callback<UserResponse> {
+        apiService.updateProfile("Bearer $token", profileRequest).enqueue(object : retrofit2.Callback<UserResponse> {
             override fun onResponse(call: retrofit2.Call<UserResponse>, response: retrofit2.Response<UserResponse>) {
                 if (response.isSuccessful && response.body() != null) {
-                    val user = response.body()!!.data
+                    val userProfile = response.body()!!.data
 
-                    // Simpan profil yang diperbarui
-                    sharedPrefsHelper.saveUserProfile(profileRequest
-                    )
+                    // Simpan data yang diperbarui ke SharedPreferences
+                    sharedPrefsHelper.saveUserProfile(profileRequest)
 
                     // Perbarui UI
                     loadUserProfile()
+                    Toast.makeText(requireContext(), "Profil berhasil diperbarui", Toast.LENGTH_SHORT).show()
                     Log.d("Profile Update", "Berhasil diperbarui")
                 } else {
                     Log.e("Profile Update", "Gagal diperbarui: ${response.message()}")
@@ -96,6 +101,7 @@ class ProfileFragment : Fragment() {
             }
         })
     }
+
 
     private fun loadUserProfile() {
         val userProfile = sharedPrefsHelper.getUserProfile()
