@@ -6,36 +6,42 @@
     app:startDestination="@+id/navigation_home">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/homeFragment"
         android:name="com.example.cholestifyapp.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_navigation_home_to_navigation_profile"
-            app:destination="@id/fragment_profile" />
+            app:destination="@id/profileFragment" />
         <action
             android:id="@+id/action_navigation_home_to_update_daily_food"
             app:destination="@id/update_daily_food" />
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment2"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_updateDailyFragment2"
+            app:destination="@id/updateDailyFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/fragment_profile"
+        android:id="@+id/profileFragment"
         android:name="com.example.cholestifyapp.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" >
         <action
-            android:id="@+id/action_navigation_profile_to_navigation_home"
-            app:destination="@id/navigation_home" />
+            android:id="@+id/action_profileFragment_to_homeFragment2"
+            app:destination="@id/homeFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/update_daily_food"
+        android:id="@+id/updateDailyFragment"
         android:name="com.example.cholestifyapp.ui.updateDaily.UpdateDaily"
         android:label="Update Daily Food"
         tools:layout="@layout/fragment_update_daily" >
         <action
-            android:id="@+id/action_update_daily_food_to_navigation_home"
-            app:destination="@id/navigation_home" />
+            android:id="@+id/action_updateDailyFragment_to_homeFragment2"
+            app:destination="@id/homeFragment" />
     </fragment>
 
 </navigation>

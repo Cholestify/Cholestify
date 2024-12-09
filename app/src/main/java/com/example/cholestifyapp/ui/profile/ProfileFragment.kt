@@ -40,7 +40,6 @@ class ProfileFragment : Fragment() {
         binding!!.tvProfileEmail.text = "LOREM IPSUM 53"
         binding!!.tvPersonalInformation.text = "Personal Information"
         binding!!.edName.hint = ""
-//        binding!!.edLastName.hint = ""
         binding!!.edPhoneNumber.hint = ""
         binding!!.edDateOfBirth.hint = ""
         binding!!.tvPersonalNutrition.text = "Personal Nutrition"
@@ -55,30 +54,18 @@ class ProfileFragment : Fragment() {
             logout()
         }
 
-
-
         return binding!!.root
     }
-
 
     private fun logout() {
         // Menghapus status login dan token
         sharedPrefsHelper.clearLoginStatus()
         sharedPrefsHelper.clearToken()
 
-        // Dapatkan NavController dari graf yang sesuai
+        // Navigasi ke LoginFragment setelah logout
         val navController = findNavController()
-
-        // Ganti graf ke auth_nav_graph untuk menuju ke LoginFragment
-        navController.setGraph(R.navigation.auth_nav_graph)
-
-        // Navigasi ke LoginFragment
         navController.navigate(R.id.loginFragment) // Menavigasi langsung ke LoginFragment
-
-        // Menutup aktivitas atau fragment
-        requireActivity().finish()
     }
-
 
     private fun getProfileInput(): UpdateProfileRequest {
         return UpdateProfileRequest(
@@ -116,7 +103,6 @@ class ProfileFragment : Fragment() {
         })
     }
 
-
     private fun loadUserProfile() {
         val userProfile = sharedPrefsHelper.getUserProfile()
 
@@ -134,9 +120,6 @@ class ProfileFragment : Fragment() {
             edBMI.setText(userProfile.bmi.toString())
         }
     }
-
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()

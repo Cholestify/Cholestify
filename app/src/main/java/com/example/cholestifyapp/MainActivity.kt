@@ -2,14 +2,15 @@ package com.example.cholestifyapp
 
 import android.os.Bundle
 import android.view.View
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.cholestifyapp.databinding.ActivityMainBinding
 import com.example.cholestifyapp.utils.SharedPrefsHelper
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,52 +21,60 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Inflate the layout using ViewBinding
+        // Inflate layout with ViewBinding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Initialize SharedPreferences helper
         sharedPrefsHelper = SharedPrefsHelper(this)
 
-        // Find the NavHostFragment
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+        // Setup NavHostFragment and NavController
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        // Periksa apakah token ada untuk memutuskan apakah pengguna sudah login
+        // Configure the navigation graph dynamically based on login status
+        configureNavigationGraph()
+
+        // Set up BottomNavigationView with NavController
+        setupBottomNavigationView()
+
+        // Set up AppBar with NavController (optional)
+        setupAppBarConfiguration()
+    }
+
+    private fun configureNavigationGraph() {
         val token = sharedPrefsHelper.getToken()
+        val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
 
-        // Tentukan graf navigasi berdasarkan status login
-        if (token.isNullOrEmpty()) {
-            // Jika token tidak ada atau kosong, navigasi ke layar login
-            navController.setGraph(R.navigation.auth_nav_graph) // Gunakan navigasi login
-        } else {
-            // Jika token ada, artinya pengguna sudah login, navigasi ke layar utama
-            navController.setGraph(R.navigation.main_nav_graph) // Gunakan navigasi utama
-        }
+        // Atur startDestination secara manual
+        navGraph.setStartDestination(
+            if (token.isNullOrEmpty()) {
+                R.id.loginFragment
+            } else {
+                R.id.homeFragment
+            }
+        )
+        navController.graph = navGraph
+    }
 
-        // Set up the BottomNavigationView with the NavController
-        val navView: BottomNavigationView = binding.navView
-        navView.setupWithNavController(navController)
+    private fun setupBottomNavigationView() {
+        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        navView.setupWithNavController(navController)  // Gunakan navController yang sudah ada
 
-        // Memantau perubahan tujuan navigasi
+        // Mengatur visibilitas BottomNavigationView berdasarkan fragment yang dipilih
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.loginFragment, R.id.registerFragment -> {
-                    // Sembunyikan BottomNavigationView saat berada di login atau register
-                    binding.navView.visibility = View.GONE
-                }
-                else -> {
-                    // Tampilkan BottomNavigationView di halaman lain
-                    binding.navView.visibility = View.VISIBLE
-                }
+            binding.navView.visibility = when (destination.id) {
+                R.id.loginFragment, R.id.registerFragment -> View.GONE
+                else -> View.VISIBLE
             }
         }
+    }
 
-        // Optional: Set up the AppBar with navigation
+    private fun setupAppBarConfiguration() {
         val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home, R.id.fragment_profile
-            )
+            setOf(R.id.homeFragment, R.id.profileFragment)
         )
+        // If you want to link AppBar with navigation, you can use:
+        // setupActionBarWithNavController(navController, appBarConfiguration)
     }
 }
