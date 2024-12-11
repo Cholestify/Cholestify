@@ -213,6 +213,7 @@
 
             <!-- Food Recommendation Section -->
             <LinearLayout
+                android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -252,6 +253,7 @@
 
                 <!-- Daftar Makanan -->
                 <TextView
+                    android:id="@+id/textViewRecom1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -259,6 +261,7 @@
                     android:hint="Soup" />
 
                 <TextView
+                    android:id="@+id/textViewRecom2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -266,6 +269,7 @@
                     android:hint="Ayam" />
 
                 <TextView
+                    android:id="@+id/textViewRecom3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
