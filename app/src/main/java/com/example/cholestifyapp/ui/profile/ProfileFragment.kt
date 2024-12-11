@@ -78,18 +78,20 @@ class ProfileFragment : Fragment() {
 
     private fun updateProfile() {
         val token = sharedPrefsHelper.getToken() ?: ""
+        val userId = sharedPrefsHelper.getUserId()  // Get the user ID from SharedPreferences
         val apiService = ApiConfig.getApiService()
         val profileRequest = getProfileInput()
 
-        apiService.updateProfile("Bearer $token", profileRequest).enqueue(object : retrofit2.Callback<UserResponse> {
+        // Send the update request with the user ID
+        apiService.updateProfile("Bearer $token", userId, profileRequest).enqueue(object : retrofit2.Callback<UserResponse> {
             override fun onResponse(call: retrofit2.Call<UserResponse>, response: retrofit2.Response<UserResponse>) {
                 if (response.isSuccessful && response.body() != null) {
                     val userProfile = response.body()!!.data
 
-                    // Simpan data yang diperbarui ke SharedPreferences
+                    // Save updated profile to SharedPreferences
                     sharedPrefsHelper.saveUserProfile(profileRequest)
 
-                    // Perbarui UI
+                    // Update UI with new profile data
                     loadUserProfile()
                     Toast.makeText(requireContext(), "Profil berhasil diperbarui", Toast.LENGTH_SHORT).show()
                     Log.d("Profile Update", "Berhasil diperbarui")
@@ -103,6 +105,7 @@ class ProfileFragment : Fragment() {
             }
         })
     }
+
 
     private fun setupActivityFactorDropdown() {
         val activityFactors = listOf("light", "normal", "hard")

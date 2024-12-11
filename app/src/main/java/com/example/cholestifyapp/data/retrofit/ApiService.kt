@@ -15,6 +15,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path
 
 interface ApiService {
     @GET("food")
@@ -26,11 +27,13 @@ interface ApiService {
     @POST("/register")
     fun register(@Body request: RegisterRequest): Call<RegisterResponse>
 
-    @PUT("updateProfile")
+    @PUT("users/profile/{id}")
     fun updateProfile(
         @Header("Authorization") token: String,
+        @Path("id") id: Int,  // Add the user ID in the URL
         @Body profile: UpdateProfileRequest
     ): Call<UserResponse>
+
 
     @GET("users")
     fun getUserProfile(
