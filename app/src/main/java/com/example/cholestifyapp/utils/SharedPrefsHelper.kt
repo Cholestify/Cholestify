@@ -50,28 +50,31 @@ class SharedPrefsHelper(context: Context) {
     fun saveUserProfile(profile: UpdateProfileRequest) {
         val editor = sharedPreferences.edit()
         editor.putString("firstName", profile.fullName)
-//        editor.putString("lastName", profile.lastName)
-//        editor.putString("phoneNumber", profile.phoneNumber)
         editor.putString("birthdate", profile.birthdate)
         editor.putInt("height", profile.height)
         editor.putInt("weight", profile.weight)
         editor.putFloat("bmi", profile.bmi.toFloat())
+        editor.putString("gender", profile.gender)  // Menyimpan gender
         editor.apply()
     }
 
     fun getUserProfile(): UpdateProfileRequest {
         val fullName = sharedPreferences.getString("firstName", "") ?: ""
+        val email = sharedPreferences.getString("email", "") ?: ""
         val birthdate = sharedPreferences.getString("birthdate", "") ?: ""
         val height = sharedPreferences.getInt("height", 0)
         val weight = sharedPreferences.getInt("weight", 0)
         val bmi = sharedPreferences.getFloat("bmi", 0.0f).toDouble()
+        val gender = sharedPreferences.getString("gender", "") ?: ""  // Mengambil gender
 
         return UpdateProfileRequest(
             fullName = fullName,
             birthdate = birthdate,
             height = height,
             weight = weight,
-            bmi = bmi
+            bmi = bmi,
+            email = email,
+            gender = gender  // Menambahkan gender pada objek
         )
     }
 

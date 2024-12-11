@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -40,12 +41,12 @@ class ProfileFragment : Fragment() {
             updateProfile()
         }
 
+        setupActivityFactorDropdown()
 
         // Tombol Logout
         binding!!.btnLogout.setOnClickListener {
             logout()
         }
-
 
         return binding!!.root
     }
@@ -65,14 +66,15 @@ class ProfileFragment : Fragment() {
 
     private fun getProfileInput(): UpdateProfileRequest {
         return UpdateProfileRequest(
-            fullName = binding!!.edName.text.toString(),
-            birthdate = binding!!.edDateOfBirth.text.toString(),
-            height = binding!!.edHeight.text.toString().toIntOrNull() ?: 0,
-            weight = binding!!.edWeight.text.toString().toIntOrNull() ?: 0,
-            bmi = binding!!.edBMI.text.toString().toDoubleOrNull() ?: 0.0,
+            fullName = binding?.edName?.text.toString(),
+            birthdate = binding?.edDateOfBirth?.text.toString(),
+            height = binding?.edHeight?.text.toString().toIntOrNull() ?: 0,
+            weight = binding?.edWeight?.text.toString().toIntOrNull() ?: 0,
+            bmi = binding?.edBMI?.text.toString().toDoubleOrNull() ?: 0.0,
+            email = binding?.tvProfileEmail?.text.toString(),
+            gender = "Not specified" // Menambahkan nilai default untuk gender
         )
     }
-
 
     private fun updateProfile() {
         val token = sharedPrefsHelper.getToken() ?: ""
@@ -102,22 +104,35 @@ class ProfileFragment : Fragment() {
         })
     }
 
+    private fun setupActivityFactorDropdown() {
+        val activityFactors = listOf("light", "normal", "hard")
+
+        // Membuat ArrayAdapter untuk AutoCompleteTextView
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, activityFactors)
+
+        // Menggunakan safe call untuk mengakses binding
+        binding?.ActivityFactor?.setAdapter(adapter)
+
+        // Mengatur listener untuk menangani pilihan pengguna
+        binding?.ActivityFactor?.setOnItemClickListener { parent, view, position, id ->
+            val selectedItem = parent.getItemAtPosition(position).toString()
+            // Menampilkan pilihan yang dipilih, bisa disesuaikan dengan logika aplikasi
+            Toast.makeText(requireContext(), "Selected Activity: $selectedItem", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     private fun loadUserProfile() {
         val userProfile = sharedPrefsHelper.getUserProfile()
 
+        Log.d("UserProfile", "Loaded Profile: $userProfile")  // Log data profil yang diambil
+
         binding?.apply {
-            tvProfileName.text = userProfile.fullName
-            tvProfileEmail.text = userProfile.fullName
-
-            // Personal Information
-            edName.setText(userProfile.fullName)
-            edDateOfBirth.setText(userProfile.birthdate)
-
-            // Personal Nutrition
-            edHeight.setText(userProfile.height.toString())
-            edWeight.setText(userProfile.weight.toString())
-            edBMI.setText(userProfile.bmi.toString())
+            tvProfileName.text = userProfile.fullName.takeIf { it.isNotEmpty() } ?: "Name not available"
+            tvProfileEmail.text = userProfile.email.takeIf { it.isNotEmpty() } ?: "Email not available"
+            tvBirthdate.text = "Birthdate: ${userProfile.birthdate.takeIf { it.isNotEmpty() } ?: "Not available"}"
+            tvWeight.text = "Weight: ${userProfile.weight} kg"
+            tvHeight.text = "Height: ${userProfile.height} cm"
+            tvGender.text = "Gender: ${userProfile.gender.takeIf { it.isNotEmpty() } ?: "Not specified"}"
         }
     }
 
@@ -141,11 +156,10 @@ class ProfileFragment : Fragment() {
 
                     Toast.makeText(requireContext(), "ID Pengguna: ${userProfile.id}", Toast.LENGTH_SHORT).show()
 
-
                     // Tampilkan data di UI
                     binding?.apply {
                         tvProfileName.text = userProfile.name
-                        tvProfileEmail.text = userProfile.email
+                        tvProfileEmail.text = userProfile.email // Menampilkan email yang tidak bisa diedit
                     }
 
                     Log.d("UserProfile", "ID: ${userProfile.id}")
@@ -161,7 +175,6 @@ class ProfileFragment : Fragment() {
             }
         })
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
