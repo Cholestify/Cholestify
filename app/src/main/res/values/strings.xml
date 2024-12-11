@@ -18,6 +18,10 @@
     <string name="activity_factor">Select your activity factor</string>
     <string name="back">Back</string>
 
+<!--    Update daily food-->
+    <string name="update_daily_food">Update daily food</string>
+
+
     <!--    Update Profile-->
     <string name="update_profile">Update Profile</string>
     <string name="Input">Input</string>

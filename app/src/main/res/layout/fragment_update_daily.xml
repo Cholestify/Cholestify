@@ -34,7 +34,7 @@
             android:text="UPDATE DAILY FOOD"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:textStyle="bold" /> <!-- Agar teks berada di tengah -->
+            android:textStyle="bold" />
     </LinearLayout>
 
     <!-- RecyclerView untuk daftar item -->
@@ -43,13 +43,31 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_update_daily_food"
         tools:listitem="@layout/item_add_food" />
 
 
+
+
+    <!-- Tombol Update Daily Food -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_update_daily_food"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="88dp"
+        android:backgroundTint="@color/green"
+        android:text="@string/update_daily_food"
+        android:textColor="@color/white"
+        app:cornerRadius="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- ProgressBar -->
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
