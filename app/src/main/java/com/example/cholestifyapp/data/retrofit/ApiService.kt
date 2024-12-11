@@ -1,6 +1,7 @@
 package com.example.cholestifyapp.data.retrofit
 
 
+import com.example.cholestifyapp.data.response.DailyNutritionResponse
 import com.example.cholestifyapp.data.response.FoodResponse
 import com.example.cholestifyapp.data.response.UserResponse
 import com.example.cholestifyapp.ui.login.LoginRequest
@@ -38,5 +39,10 @@ interface ApiService {
 
     @GET("food/recommendation")
     suspend fun getFoodRecommendations(): FoodResponse
+
+    @GET("users/daily-nutrition")
+    suspend fun getDailyNutrition(
+        @Header("Authorization") token: String
+    ): DailyNutritionResponse
 
 }

@@ -28,7 +28,7 @@ class UpdateViewModel: ViewModel() {
     val message: LiveData<String> = _message
 
     companion object {
-        private const val TAG = "UpdateFoof"
+        private const val TAG = "UpdateFood"
 //        private const val ListFood = 1 // ID khusus untuk mendeteksi
     }
 
