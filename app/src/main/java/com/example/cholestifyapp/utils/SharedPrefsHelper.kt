@@ -1,10 +1,12 @@
 package com.example.cholestifyapp.utils
 
 import android.content.Context
+import android.util.Log
 import com.example.cholestifyapp.ui.profile.UpdateProfileRequest
 
 class SharedPrefsHelper(context: Context) {
     private val sharedPreferences = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
+
 
     // Menyimpan status login
     fun setLoginStatus(status: Boolean) {
@@ -36,7 +38,7 @@ class SharedPrefsHelper(context: Context) {
         sharedPreferences.edit().remove("isLoggedIn").apply()
     }
 
-//    Save Id
+    // Menyimpan User ID
     fun saveUserId(userId: Int) {
         sharedPreferences.edit().putInt("userId", userId).apply()
     }
@@ -45,8 +47,7 @@ class SharedPrefsHelper(context: Context) {
         return sharedPreferences.getInt("userId", -1) // -1 jika tidak ditemukan
     }
 
-
-
+    // Menyimpan profil pengguna
     fun saveUserProfile(profile: UpdateProfileRequest) {
         val editor = sharedPreferences.edit()
         editor.putString("firstName", profile.fullName)
@@ -76,11 +77,28 @@ class SharedPrefsHelper(context: Context) {
             weight = weight,
             bmi = bmi,
             email = email,
-            gender = gender,  // Menambahkan gender pada objek
+            gender = gender,
             activityFactor = "Not specified"
         )
     }
 
+    // Fungsi tambahan untuk menyimpan nilai kolesterol
+    fun saveCholesterolValue(cholesterolValue: Int) {
+        val editor = sharedPreferences.edit()
+        editor.putInt("cholesterolValue", cholesterolValue)
+        // Menggunakan commit() untuk memastikan nilai disimpan segera
+        if (editor.commit()) {
+            Log.d("SharedPrefsHelper", "Cholesterol value saved: $cholesterolValue")
+        } else {
+            Log.e("SharedPrefsHelper", "Failed to save cholesterol value")
+        }
+    }
 
-
+    // Fungsi tambahan untuk mendapatkan nilai kolesterol
+    fun getCholesterolValue(): Int {
+        val cholesterolValue =
+            sharedPreferences.getInt("cholesterolValue", 0) // Default 0 jika tidak ditemukan
+        Log.d("SharedPrefsHelper", "Cholesterol value retrieved: $cholesterolValue")
+        return cholesterolValue
+    }
 }

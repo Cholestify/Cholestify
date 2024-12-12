@@ -24,11 +24,16 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        val sharedPrefsHelper = SharedPrefsHelper(requireContext())
+
+        // Menampilkan nilai kolesterol yang sudah disimpan
+        val savedCholesterolValue = sharedPrefsHelper.getCholesterolValue()
+        updateCholesterolStatus(savedCholesterolValue)
 
         // Listener untuk tombol Update Daily Food
         binding.updateDailyFood.setOnClickListener {
@@ -56,11 +61,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateCholesterolStatus(cholesterolValue: Int) {
+        val sharedPrefsHelper = SharedPrefsHelper(requireContext())  // Mendapatkan SharedPrefsHelper
+
         when {
             cholesterolValue < 200 -> {
                 // Mengubah teks dan warna untuk kondisi HEALTHY
                 binding.dangerText.text = "HEALTHY"
-                binding.dangerText.setTextColor(Color.parseColor("#00FF00")) // Hijau
+                binding.dangerText.setTextColor(Color.parseColor("#11CE6D")) // Hijau
                 binding.warningText.text = "You are healthy now, keep it up"
             }
             cholesterolValue in 200..239 -> {
@@ -76,6 +83,9 @@ class HomeFragment : Fragment() {
                 binding.warningText.text = "Your shouldn't consume cholesterol > 300 mg"
             }
         }
+
+        // Menyimpan nilai kolesterol ke SharedPreferences
+        sharedPrefsHelper.saveCholesterolValue(cholesterolValue)
     }
 
     private fun fetchDailyNutrition() {
