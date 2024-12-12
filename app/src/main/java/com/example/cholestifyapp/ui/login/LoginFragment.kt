@@ -1,5 +1,7 @@
 package com.example.cholestifyapp.ui.login
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -50,6 +52,8 @@ class LoginFragment : Fragment() {
         binding.buttonregist.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
+
+        playAnimation()
 
         // Handle back button press
         requireActivity().onBackPressedDispatcher.addCallback(this) {
@@ -109,6 +113,25 @@ class LoginFragment : Fragment() {
         binding.progressBarLogin.visibility = if (isLoading) View.VISIBLE else View.GONE
         // Nonaktifkan tombol login selama proses berjalan
         binding.buttonlogin.isEnabled = !isLoading
+    }
+
+    private fun playAnimation() {
+        ObjectAnimator.ofFloat(binding.logocoles, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 500
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
+
+        val login = ObjectAnimator.ofFloat(binding.buttonlogin, View.ALPHA, 1f).setDuration(90)
+
+        val together = AnimatorSet().apply {
+            playTogether(login)
+        }
+
+        AnimatorSet().apply {
+            playSequentially(together)
+            start()
+        }
     }
 
     override fun onDestroyView() {
