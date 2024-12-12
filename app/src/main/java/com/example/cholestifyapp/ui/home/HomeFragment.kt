@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -56,6 +57,14 @@ class HomeFragment : Fragment() {
         fetchFoodRecommendations()
         fetchMealFoodNutrition()
         fetchMeals()
+
+        // Menangani tombol back
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Menutup aplikasi ketika tombol back ditekan
+                requireActivity().finish()
+            }
+        })
 
         return binding.root
     }
