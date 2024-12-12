@@ -1,6 +1,6 @@
 package com.example.cholestifyapp.ui.home
 
-import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -35,6 +35,17 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_homeFragment_to_updateDailyFragment)
         }
 
+        // Listener untuk tombol check nilai kolesterol
+        binding.buttonIYV.setOnClickListener {
+            val inputText = binding.inputCholesterol.text.toString()
+            if (inputText.isNotEmpty()) {
+                val cholesterolValue = inputText.toInt()
+                updateCholesterolStatus(cholesterolValue)
+            } else {
+                showError("Please enter a valid number")
+            }
+        }
+
         // Memanggil API untuk mendapatkan data
         fetchDailyNutrition()
         fetchFoodRecommendations()
@@ -42,6 +53,29 @@ class HomeFragment : Fragment() {
         fetchMeals()
 
         return binding.root
+    }
+
+    private fun updateCholesterolStatus(cholesterolValue: Int) {
+        when {
+            cholesterolValue < 200 -> {
+                // Mengubah teks dan warna untuk kondisi HEALTHY
+                binding.dangerText.text = "HEALTHY"
+                binding.dangerText.setTextColor(Color.parseColor("#00FF00")) // Hijau
+                binding.warningText.text = "You are healthy now, keep it up"
+            }
+            cholesterolValue in 200..239 -> {
+                // Mengubah teks dan warna untuk kondisi AT RISK
+                binding.dangerText.text = "AT RISK"
+                binding.dangerText.setTextColor(Color.parseColor("#FFC107")) // Kuning
+                binding.warningText.text = "You are at risk, watch your cholesterol intake"
+            }
+            cholesterolValue >= 240 -> {
+                // Mengubah teks dan warna untuk kondisi DANGEROUS
+                binding.dangerText.text = "DANGEROUS"
+                binding.dangerText.setTextColor(Color.parseColor("#FF0000")) // Merah
+                binding.warningText.text = "Your shouldn't consume cholesterol > 300 mg"
+            }
+        }
     }
 
     private fun fetchDailyNutrition() {
@@ -96,18 +130,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun fetchMeals() {
-        val sharedPrefsHelper = SharedPrefsHelper(requireContext())  // Menggunakan SharedPrefsHelper untuk mengakses token
-        val token = sharedPrefsHelper.getToken() ?: ""  // Mendapatkan token dari SharedPreferences
+        val sharedPrefsHelper = SharedPrefsHelper(requireContext())
+        val token = sharedPrefsHelper.getToken() ?: ""
         if (token.isEmpty()) {
             showError("Token is missing. Please log in again.")
             return
         }
 
-        val authorizationHeader = "Bearer $token"  // Menambahkan token ke dalam header Authorization
-
+        val authorizationHeader = "Bearer $token"
         lifecycleScope.launch {
             try {
-                val response = ApiConfig.getApiService().getMeals(authorizationHeader)  // Memanggil API dengan header Authorization
+                val response = ApiConfig.getApiService().getMeals(authorizationHeader)
                 Log.d("HomeFragment", "API Response: $response")
 
                 if (!response.error) {
@@ -125,7 +158,6 @@ class HomeFragment : Fragment() {
             }
         }
     }
-
 
     private fun fetchMealFoodNutrition() {
         val sharedPrefsHelper = SharedPrefsHelper(requireContext())
@@ -155,13 +187,20 @@ class HomeFragment : Fragment() {
 
     private fun updateNutritionUI(data: FoodNutritionData) {
         // Tambahkan log untuk melihat apakah data sudah diterima dengan benar
-        Log.d("HomeFragment", "Calories: ${data.calories}, Protein: ${data.protein}, Fat: ${data.fat}, Carbohydrate: ${data.carbohydrate}")
+        Log.d(
+            "HomeFragment",
+            "Calories: ${data.calories}, Protein: ${data.protein}, Fat: ${data.fat}, Carbohydrate: ${data.carbohydrate}"
+        )
 
         // Periksa apakah data ada, jika tidak tampilkan "N/A" atau angka 0
-        binding.textViewFoodRecordCarbohydrate.text = String.format("Carbohydrate: %.1fg", data.carbohydrate.takeIf { it != 0f } ?: 0f)
-        binding.textViewFoodRecordProtein.text = String.format("Protein: %.1fg", data.protein.takeIf { it != 0f } ?: 0f)
-        binding.textViewFoodRecordFat.text = String.format("Fat: %.1fg", data.fat.takeIf { it != 0f } ?: 0f)
-        binding.textViewFoodRecordCalories.text = String.format("Calories: %.1fkcal", data.calories.takeIf { it != 0f } ?: 0f)
+        binding.textViewFoodRecordCarbohydrate.text =
+            String.format("Carbohydrate: %.1fg", data.carbohydrate.takeIf { it != 0f } ?: 0f)
+        binding.textViewFoodRecordProtein.text =
+            String.format("Protein: %.1fg", data.protein.takeIf { it != 0f } ?: 0f)
+        binding.textViewFoodRecordFat.text =
+            String.format("Fat: %.1fg", data.fat.takeIf { it != 0f } ?: 0f)
+        binding.textViewFoodRecordCalories.text =
+            String.format("Calories: %.1fkcal", data.calories.takeIf { it != 0f } ?: 0f)
     }
 
     private fun showError(message: String) {

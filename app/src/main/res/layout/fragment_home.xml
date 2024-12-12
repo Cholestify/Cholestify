@@ -72,7 +72,7 @@
 
                 <!-- Button di kanan dengan drawable -->
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/buttonIYV"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:background="@drawable/check" />
@@ -80,6 +80,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearvalue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
