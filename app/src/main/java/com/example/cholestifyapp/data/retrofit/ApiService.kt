@@ -4,6 +4,7 @@ package com.example.cholestifyapp.data.retrofit
 import com.example.cholestifyapp.data.response.DailyNutritionResponse
 import com.example.cholestifyapp.data.response.FoodRecordResponse
 import com.example.cholestifyapp.data.response.FoodResponse
+import com.example.cholestifyapp.data.response.IHaveEatenResponse
 import com.example.cholestifyapp.data.response.UserResponse
 import com.example.cholestifyapp.ui.login.LoginRequest
 import com.example.cholestifyapp.ui.login.LoginResponse
@@ -53,5 +54,10 @@ interface ApiService {
     suspend fun getMealFoodNutrition(
         @Header("Authorization") token: String
     ): FoodRecordResponse
+
+    @GET("mealFood")
+    suspend fun getMeals(
+        @Header("Authorization") token: String  // Menambahkan header Authorization
+    ): IHaveEatenResponse
 
 }

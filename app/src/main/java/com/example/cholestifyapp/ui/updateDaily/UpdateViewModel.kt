@@ -3,9 +3,7 @@ package com.example.cholestifyapp.ui.updateDaily
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.cholestifyapp.data.request.AddMealRequest
 import com.example.cholestifyapp.data.response.DataItem
-import com.example.cholestifyapp.data.response.DataMealFoodHistoryRespnose
 import com.example.cholestifyapp.data.response.FoodResponse
 import com.example.cholestifyapp.data.retrofit.ApiConfig
 import retrofit2.Call

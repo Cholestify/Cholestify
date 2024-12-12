@@ -1,5 +1,6 @@
 package com.example.cholestifyapp.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -38,6 +39,7 @@ class HomeFragment : Fragment() {
         fetchDailyNutrition()
         fetchFoodRecommendations()
         fetchMealFoodNutrition()
+        fetchMeals()
 
         return binding.root
     }
@@ -92,6 +94,38 @@ class HomeFragment : Fragment() {
         binding.textViewCarbo.text = String.format("%dmg\nCarbo", data.totalCarbohydrate.toInt())
         binding.textViewCalories.text = String.format("%dmg\nTotal Cal", data.totalCalories.toInt())
     }
+
+    private fun fetchMeals() {
+        val sharedPrefsHelper = SharedPrefsHelper(requireContext())  // Menggunakan SharedPrefsHelper untuk mengakses token
+        val token = sharedPrefsHelper.getToken() ?: ""  // Mendapatkan token dari SharedPreferences
+        if (token.isEmpty()) {
+            showError("Token is missing. Please log in again.")
+            return
+        }
+
+        val authorizationHeader = "Bearer $token"  // Menambahkan token ke dalam header Authorization
+
+        lifecycleScope.launch {
+            try {
+                val response = ApiConfig.getApiService().getMeals(authorizationHeader)  // Memanggil API dengan header Authorization
+                Log.d("HomeFragment", "API Response: $response")
+
+                if (!response.error) {
+                    // Jika response tidak error, tampilkan data meal ke UI
+                    val meals = response.data
+                    binding.food1.text = meals.getOrNull(0)?.name ?: "No Meal"
+                    binding.food2.text = meals.getOrNull(1)?.name ?: "No Meal"
+                    binding.food3.text = meals.getOrNull(2)?.name ?: "No Meal"
+                } else {
+                    showError("Failed to fetch meals: ${response.message}")
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                showError("An error occurred while fetching meals")
+            }
+        }
+    }
+
 
     private fun fetchMealFoodNutrition() {
         val sharedPrefsHelper = SharedPrefsHelper(requireContext())
