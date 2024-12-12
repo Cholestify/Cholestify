@@ -85,43 +85,24 @@ class ProfileFragment : Fragment() {
 
         return UpdateProfileRequest(
             fullName = binding?.edName?.text.toString(),
-<<<<<<< HEAD
-            birthdate = birthdate,
-            height = height,
-            weight = weight,
-            bmi = (weight / ((height / 100.0).pow(2))).takeIf { it.isFinite() } ?: 0.0,
-            email = binding?.tvProfileEmail?.text.toString(),
-            gender = binding?.edGender?.text.toString(),
-            activityFactor = binding?.ActivityFactor?.text.toString()
-=======
             birthdate = binding?.edDateOfBirth?.text.toString(),
             height = binding?.edHeight?.text.toString().toIntOrNull() ?: 0,
             weight = binding?.edWeight?.text.toString().toIntOrNull() ?: 0,
 //            bmi = binding?.edBMI?.text.toString().toDoubleOrNull() ?: 0.0,
             email = binding?.tvProfileEmail?.text.toString(),
-            gender = "male"
->>>>>>> 1d8add3 (Update Profile Fix but minus date)
+            gender = "male",
+            activityFactor = binding?.ActivityFactor?.text.toString()
         )
     }
 
     private fun updateProfile() {
         val token = sharedPrefsHelper.getToken() ?: ""
-<<<<<<< HEAD
-        val userId = sharedPrefsHelper.getUserId()
-        val apiService = ApiConfig.getApiService()
-        val profileRequest = getProfileInput()
 
-        Log.d("ProfileFragment", "Starting profile update for user ID: $userId")
-        Log.d("ProfileFragment", "Update request body: $profileRequest")
-
-        apiService.updateProfile("Bearer $token", userId, profileRequest).enqueue(object : retrofit2.Callback<UserResponse> {
-=======
         val apiService = ApiConfig.getApiService()
         val profileRequest = getProfileInput()
 
         // Send the update request with the user ID
         apiService.updateProfile("Bearer $token", profileRequest).enqueue(object : retrofit2.Callback<UserResponse> {
->>>>>>> 1d8add3 (Update Profile Fix but minus date)
             override fun onResponse(call: retrofit2.Call<UserResponse>, response: retrofit2.Response<UserResponse>) {
                 if (response.isSuccessful && response.body() != null) {
                     val userProfile = response.body()!!.data

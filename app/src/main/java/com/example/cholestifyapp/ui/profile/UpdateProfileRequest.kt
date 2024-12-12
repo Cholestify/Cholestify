@@ -15,13 +15,7 @@ data class UpdateProfileRequest(
     val height: Int,
     @field:SerializedName("weight")
     val weight: Int,
-<<<<<<< HEAD
-    @field:SerializedName("bmi")
-    val bmi: Double,
+//    val bmi: Double,
     @field:SerializedName("activity")
     val activityFactor: String
-=======
-//    val bmi: Double,
-//    val activityFactor: String
->>>>>>> 1d8add3 (Update Profile Fix but minus date)
 )
