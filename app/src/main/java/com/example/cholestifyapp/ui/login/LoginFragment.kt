@@ -117,7 +117,7 @@ class LoginFragment : Fragment() {
 
     private fun playAnimation() {
         ObjectAnimator.ofFloat(binding.logocoles, View.TRANSLATION_X, -30f, 30f).apply {
-            duration = 500
+            duration = 2200
             repeatCount = ObjectAnimator.INFINITE
             repeatMode = ObjectAnimator.REVERSE
         }.start()
