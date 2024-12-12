@@ -46,26 +46,26 @@ class UpdateViewModel : ViewModel() {
         })
     }
 
-    fun sendSelectedFoodData(selectedItems: List<AddMealRequest>) {
-        _isLoading.value = true
-        ApiConfig.getApiService().sendDailyFoodUpdate(selectedItems)
-            .enqueue(object : Callback<DataMealFoodHistoryRespnose> {
-                override fun onResponse(
-                    call: Call<DataMealFoodHistoryRespnose>,
-                    response: Response<DataMealFoodHistoryRespnose>
-                ) {
-                    _isLoading.value = false
-                    if (response.isSuccessful) {
-                        _message.value = "Data berhasil diperbarui"
-                    } else {
-                        _message.value = "Gagal mengirim data: ${response.message()}"
-                    }
-                }
-
-                override fun onFailure(call: Call<DataMealFoodHistoryRespnose>, t: Throwable) {
-                    _isLoading.value = false
-                    _message.value = "Kesalahan jaringan: ${t.message}"
-                }
-            })
-    }
+//    fun sendSelectedFoodData(selectedItems: List<AddMealRequest>) {
+//        _isLoading.value = true
+//        ApiConfig.getApiService().sendDailyFoodUpdate(selectedItems)
+//            .enqueue(object : Callback<DataMealFoodHistoryRespnose> {
+//                override fun onResponse(
+//                    call: Call<DataMealFoodHistoryRespnose>,
+//                    response: Response<DataMealFoodHistoryRespnose>
+//                ) {
+//                    _isLoading.value = false
+//                    if (response.isSuccessful) {
+//                        _message.value = "Data berhasil diperbarui"
+//                    } else {
+//                        _message.value = "Gagal mengirim data: ${response.message()}"
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<DataMealFoodHistoryRespnose>, t: Throwable) {
+//                    _isLoading.value = false
+//                    _message.value = "Kesalahan jaringan: ${t.message}"
+//                }
+//            })
+//    }
 }
