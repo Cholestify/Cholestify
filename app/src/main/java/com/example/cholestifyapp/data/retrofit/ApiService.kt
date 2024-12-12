@@ -13,6 +13,7 @@ import com.example.cholestifyapp.ui.register.RegisterRequest
 import com.example.cholestifyapp.ui.register.RegisterResponse
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST

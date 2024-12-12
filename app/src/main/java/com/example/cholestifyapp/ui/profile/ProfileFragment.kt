@@ -101,6 +101,8 @@ class ProfileFragment : Fragment() {
         val apiService = ApiConfig.getApiService()
         val profileRequest = getProfileInput()
 
+        Log.d("ProfileFragment", "Update request body: $profileRequest")
+
         // Send the update request with the user ID
         apiService.updateProfile("Bearer $token", profileRequest).enqueue(object : retrofit2.Callback<UserResponse> {
             override fun onResponse(call: retrofit2.Call<UserResponse>, response: retrofit2.Response<UserResponse>) {
@@ -178,10 +180,16 @@ class ProfileFragment : Fragment() {
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
+        // Log untuk debugging
         Log.d("ProfileFragment", "Showing date picker dialog")
-        DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
+
+        // Menampilkan DatePickerDialog
+        DatePickerDialog(editText.context, { _, selectedYear, selectedMonth, selectedDay ->
+            // Format tanggal ke yyyy-MM-dd
             val formattedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
+            // Set tanggal ke EditText
             editText.setText(formattedDate)
+            // Log hasil tanggal
             Log.d("ProfileFragment", "Date selected: $formattedDate")
         }, year, month, day).show()
     }
