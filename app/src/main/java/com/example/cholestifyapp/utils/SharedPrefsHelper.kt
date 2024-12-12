@@ -54,7 +54,7 @@ class SharedPrefsHelper(context: Context) {
         editor.putString("birthdate", profile.birthdate)
         editor.putInt("height", profile.height)
         editor.putInt("weight", profile.weight)
-        editor.putFloat("bmi", profile.bmi.toFloat())
+//        editor.putFloat("bmi", profile.bmi.toFloat())
         editor.putString("gender", profile.gender)  // Menyimpan gender
         editor.putString("activityFactor", profile.activityFactor)
         editor.apply()
@@ -66,7 +66,7 @@ class SharedPrefsHelper(context: Context) {
         val birthdate = sharedPreferences.getString("birthdate", "") ?: ""
         val height = sharedPreferences.getInt("height", 0)
         val weight = sharedPreferences.getInt("weight", 0)
-        val bmi = sharedPreferences.getFloat("bmi", 0.0f).toDouble()
+//        val bmi = sharedPreferences.getFloat("bmi", 0.0f).toDouble()
         val gender = sharedPreferences.getString("gender", "") ?: ""  // Mengambil gender
         val activityFactor = sharedPreferences.getString("activityFactor", "") ?: ""
 
@@ -75,7 +75,7 @@ class SharedPrefsHelper(context: Context) {
             birthdate = birthdate,
             height = height,
             weight = weight,
-            bmi = bmi,
+//            bmi = bmi,
             email = email,
             gender = gender,
             activityFactor = "Not specified"

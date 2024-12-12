@@ -29,10 +29,9 @@ interface ApiService {
     @POST("/register")
     fun register(@Body request: RegisterRequest): Call<RegisterResponse>
 
-    @PUT("users/profile/{id}")
+    @PUT("users/profile")
     fun updateProfile(
         @Header("Authorization") token: String,
-        @Path("id") id: Int,  // Add the user ID in the URL
         @Body profile: UpdateProfileRequest
     ): Call<UserResponse>
 
