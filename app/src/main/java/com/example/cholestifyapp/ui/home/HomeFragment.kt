@@ -171,6 +171,7 @@ class HomeFragment : Fragment() {
                 } else {
                     showError("Failed to fetch meals: ${response.message}")
                 }
+
             } catch (e: Exception) {
                 e.printStackTrace()
                 showError("An error occurred while fetching meals")
