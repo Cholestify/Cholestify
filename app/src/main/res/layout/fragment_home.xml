@@ -397,6 +397,7 @@
 
                 <!-- Data Nutrisi -->
                 <TextView
+                    android:id="@+id/textViewFoodRecordCarbohydrate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -405,6 +406,7 @@
                     android:textColor="#000000" />
 
                 <TextView
+                    android:id="@+id/textViewFoodRecordProtein"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -413,6 +415,7 @@
                     android:textColor="#000000" />
 
                 <TextView
+                    android:id="@+id/textViewFoodRecordFat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -421,11 +424,12 @@
                     android:textColor="#000000" />
 
                 <TextView
+                    android:id="@+id/textViewFoodRecordCalories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/poppins"
-                    android:text="Cholesterol: 0"
+                    android:text="Calories: 0"
                     android:textColor="#000000" />
             </LinearLayout>
 
