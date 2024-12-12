@@ -35,7 +35,7 @@ data class Data(
 	val name: String,
 
 	@field:SerializedName("weight")
-	val weight: Any,
+	val weight: Int,
 
 	@field:SerializedName("id")
 	val id: Int,

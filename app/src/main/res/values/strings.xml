@@ -14,7 +14,6 @@
     <!--    Personal Nutrition-->
     <string name="height">Height</string>
     <string name="weight">Weight</string>
-    <string name="bmi">BMI</string>
     <string name="activity_factor">Select your activity factor</string>
     <string name="back">Back</string>
 

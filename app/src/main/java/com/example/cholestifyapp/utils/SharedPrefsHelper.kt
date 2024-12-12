@@ -55,6 +55,7 @@ class SharedPrefsHelper(context: Context) {
         editor.putInt("weight", profile.weight)
         editor.putFloat("bmi", profile.bmi.toFloat())
         editor.putString("gender", profile.gender)  // Menyimpan gender
+        editor.putString("activityFactor", profile.activityFactor)
         editor.apply()
     }
 
@@ -66,6 +67,7 @@ class SharedPrefsHelper(context: Context) {
         val weight = sharedPreferences.getInt("weight", 0)
         val bmi = sharedPreferences.getFloat("bmi", 0.0f).toDouble()
         val gender = sharedPreferences.getString("gender", "") ?: ""  // Mengambil gender
+        val activityFactor = sharedPreferences.getString("activityFactor", "") ?: ""
 
         return UpdateProfileRequest(
             fullName = fullName,
@@ -74,7 +76,8 @@ class SharedPrefsHelper(context: Context) {
             weight = weight,
             bmi = bmi,
             email = email,
-            gender = gender  // Menambahkan gender pada objek
+            gender = gender,  // Menambahkan gender pada objek
+            activityFactor = "Not specified"
         )
     }
 

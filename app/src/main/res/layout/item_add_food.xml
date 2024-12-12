@@ -57,30 +57,3 @@
         </ScrollView>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
-
-
-<!--    &lt;!&ndash; Toolbar &ndash;&gt;-->
-<!--<LinearLayout-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:orientation="horizontal"-->
-<!--android:gravity="center_vertical"-->
-<!--android:paddingVertical="8dp">-->
-
-<!--<ImageView-->
-<!--    android:layout_width="24dp"-->
-<!--    android:layout_height="24dp"-->
-<!--    android:src="@drawable/ic_arrow_back"-->
-<!--    android:contentDescription="@string/back"-->
-<!--    android:layout_marginEnd="8dp" />-->
-
-<!--<TextView-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:fontFamily="@font/poppins_bold"-->
-<!--    android:text="UPDATE DAILY FOOD"-->
-<!--    android:textColor="@color/black"-->
-<!--    android:textSize="18sp"-->
-<!--    android:textStyle="bold"-->
-<!--    android:gravity="center"/>  &lt;!&ndash; Agar teks berada di tengah &ndash;&gt;-->
-<!--</LinearLayout>-->

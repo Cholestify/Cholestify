@@ -72,7 +72,8 @@ class ProfileFragment : Fragment() {
             weight = binding?.edWeight?.text.toString().toIntOrNull() ?: 0,
             bmi = binding?.edBMI?.text.toString().toDoubleOrNull() ?: 0.0,
             email = binding?.tvProfileEmail?.text.toString(),
-            gender = "Not specified" // Menambahkan nilai default untuk gender
+            gender = "Not specified", // Menambahkan nilai default untuk gender
+            activityFactor = binding?.ActivityFactor?.text.toString()
         )
     }
 
@@ -136,6 +137,7 @@ class ProfileFragment : Fragment() {
             tvWeight.text = "Weight: ${userProfile.weight} kg"
             tvHeight.text = "Height: ${userProfile.height} cm"
             tvGender.text = "Gender: ${userProfile.gender.takeIf { it.isNotEmpty() } ?: "Not specified"}"
+            ActivityFactor.setText(userProfile.activityFactor.takeIf { it.isNotEmpty() } ?: "Not specified")
         }
     }
 
@@ -163,6 +165,11 @@ class ProfileFragment : Fragment() {
                     binding?.apply {
                         tvProfileName.text = userProfile.name
                         tvProfileEmail.text = userProfile.email // Menampilkan email yang tidak bisa diedit
+                        tvBirthdate.text = "Birthdate: ${userProfile.birthdate}"
+                        tvWeight.text = "Weight: ${userProfile.weight} kg"
+                        tvHeight.text = "Height: ${userProfile.height} cm"
+                        tvGender.text = "Gender: ${userProfile.gender}"
+
                     }
 
                     Log.d("UserProfile", "ID: ${userProfile.id}")
