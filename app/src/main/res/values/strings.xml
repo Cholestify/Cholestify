@@ -7,7 +7,6 @@
     <!--    Profile-->
     <string name="full_name">What’s your full name?</string>
     <string name="last_name">What’s your last name?</string>
-    <string name="phone_number">Phone number</string>
     <string name="date_of_birth">What is your date of birth?</string>
     <string name="gender">Select your gender</string>
 

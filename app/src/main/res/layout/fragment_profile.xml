@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
-                android:text="Fadel Ganteng"
+                android:text="Your Name"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -138,21 +138,20 @@
                     android:hint="@string/full_name" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Phone Number Input -->
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edPhoneNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/phone_number" />
-            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Date of Birth Input -->
+            <EditText
+                android:id="@+id/edDateOfBirth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="What is your date of birth?"
+                android:focusable="false"
+                android:clickable="true" />
+
+
+            <!-- Gender Input -->
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
@@ -160,10 +159,10 @@
                 android:layout_marginTop="12dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edDateOfBirth"
+                    android:id="@+id/edGender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/date_of_birth" />
+                    android:hint="@string/gender" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Personal Nutrition Section -->

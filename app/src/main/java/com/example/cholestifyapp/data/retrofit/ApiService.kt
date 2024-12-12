@@ -36,7 +36,6 @@ interface ApiService {
         @Body profile: UpdateProfileRequest
     ): Call<UserResponse>
 
-
     @GET("users")
     fun getUserProfile(
         @Header("Authorization") token: String

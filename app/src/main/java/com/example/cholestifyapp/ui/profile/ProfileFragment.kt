@@ -1,11 +1,13 @@
 package com.example.cholestifyapp.ui.profile
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -14,6 +16,8 @@ import com.example.cholestifyapp.data.response.UserResponse
 import com.example.cholestifyapp.data.retrofit.ApiConfig
 import com.example.cholestifyapp.databinding.FragmentProfileBinding
 import com.example.cholestifyapp.utils.SharedPrefsHelper
+import java.util.Calendar
+import kotlin.math.pow
 
 class ProfileFragment : Fragment() {
 
@@ -22,172 +26,171 @@ class ProfileFragment : Fragment() {
     private lateinit var sharedPrefsHelper: SharedPrefsHelper
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
 
-        // Inisialisasi SharedPrefsHelper
         sharedPrefsHelper = SharedPrefsHelper(requireContext())
-
-        // Panggil API untuk mendapatkan profil pengguna
         fetchUserProfile()
-
-        // Tampilkan data profil saat pertama kali fragment dimuat
-        loadUserProfile()
 
         binding?.btnUpdateProfile?.setOnClickListener {
             updateProfile()
         }
 
         setupActivityFactorDropdown()
-
-        // Tombol Logout
         binding!!.btnLogout.setOnClickListener {
             logout()
+        }
+
+        binding?.edDateOfBirth?.setOnClickListener {
+            showDatePickerDialog(binding!!.edDateOfBirth)
         }
 
         return binding!!.root
     }
 
     private fun logout() {
-        // Menghapus status login dan token
+        Log.d("ProfileFragment", "User logout initiated")
         sharedPrefsHelper.clearLoginStatus()
         sharedPrefsHelper.clearToken()
-
-        // Navigasi ke LoginFragment setelah logout
-        val navController = findNavController()
-        navController.navigate(R.id.loginFragment) // Menavigasi langsung ke LoginFragment
-
-        // Menghapus semua fragment di back stack
-        navController.popBackStack(R.id.loginFragment, false)
+        findNavController().navigate(R.id.loginFragment)
+        findNavController().popBackStack(R.id.loginFragment, false)
+        Log.d("ProfileFragment", "User successfully logged out")
     }
 
     private fun getProfileInput(): UpdateProfileRequest {
+        Log.d("ProfileFragment", "Getting profile input from user")
+        val birthdate = binding?.edDateOfBirth?.text.toString()
+        val height = binding?.edHeight?.text.toString().toIntOrNull() ?: 0
+        val weight = binding?.edWeight?.text.toString().toIntOrNull() ?: 0
+
+        if (!birthdate.matches(Regex("\\d{4}-\\d{2}-\\d{2}"))) {
+            Log.e("ProfileFragment", "Invalid birthdate format: $birthdate")
+            Toast.makeText(requireContext(), "Tanggal lahir harus dalam format YYYY-MM-DD", Toast.LENGTH_SHORT).show()
+            throw IllegalArgumentException("Invalid birthdate format")
+        }
+
+        if (height !in 50..250) {
+            Log.e("ProfileFragment", "Invalid height value: $height")
+            Toast.makeText(requireContext(), "Tinggi badan harus antara 50 cm dan 250 cm", Toast.LENGTH_SHORT).show()
+            throw IllegalArgumentException("Invalid height value")
+        }
+
+        if (weight !in 10..300) {
+            Log.e("ProfileFragment", "Invalid weight value: $weight")
+            Toast.makeText(requireContext(), "Berat badan harus antara 10 kg dan 300 kg", Toast.LENGTH_SHORT).show()
+            throw IllegalArgumentException("Invalid weight value")
+        }
+
         return UpdateProfileRequest(
             fullName = binding?.edName?.text.toString(),
-            birthdate = binding?.edDateOfBirth?.text.toString(),
-            height = binding?.edHeight?.text.toString().toIntOrNull() ?: 0,
-            weight = binding?.edWeight?.text.toString().toIntOrNull() ?: 0,
-            bmi = binding?.edBMI?.text.toString().toDoubleOrNull() ?: 0.0,
+            birthdate = birthdate,
+            height = height,
+            weight = weight,
+            bmi = (weight / ((height / 100.0).pow(2))).takeIf { it.isFinite() } ?: 0.0,
             email = binding?.tvProfileEmail?.text.toString(),
-            gender = "Not specified", // Menambahkan nilai default untuk gender
+            gender = binding?.edGender?.text.toString(),
             activityFactor = binding?.ActivityFactor?.text.toString()
         )
     }
 
     private fun updateProfile() {
         val token = sharedPrefsHelper.getToken() ?: ""
-        val userId = sharedPrefsHelper.getUserId()  // Get the user ID from SharedPreferences
+        val userId = sharedPrefsHelper.getUserId()
         val apiService = ApiConfig.getApiService()
         val profileRequest = getProfileInput()
 
-        // Send the update request with the user ID
+        Log.d("ProfileFragment", "Starting profile update for user ID: $userId")
+        Log.d("ProfileFragment", "Update request body: $profileRequest")
+
         apiService.updateProfile("Bearer $token", userId, profileRequest).enqueue(object : retrofit2.Callback<UserResponse> {
             override fun onResponse(call: retrofit2.Call<UserResponse>, response: retrofit2.Response<UserResponse>) {
                 if (response.isSuccessful && response.body() != null) {
                     val userProfile = response.body()!!.data
-
-                    // Save updated profile to SharedPreferences
+                    Log.d("ProfileFragment", "Profile update successful: $userProfile")
                     sharedPrefsHelper.saveUserProfile(profileRequest)
 
-                    // Update UI with new profile data
-                    loadUserProfile()
-                    Toast.makeText(requireContext(), "Profil berhasil diperbarui", Toast.LENGTH_SHORT).show()
-                    Log.d("Profile Update", "Berhasil diperbarui")
+                    binding?.apply {
+                        tvProfileName.text = userProfile!!.name
+                        tvProfileEmail.text = userProfile.email
+                        tvBirthdate.text = "Birthdate: ${userProfile.birthdate.split("T")[0]}"
+                        tvWeight.text = "Weight: ${userProfile.weight} kg"
+                        tvHeight.text = "Height: ${userProfile.height} cm"
+                        tvGender.text = "Gender: ${userProfile.gender}"
+                    }
+
+                    Toast.makeText(requireContext(), response.body()?.message, Toast.LENGTH_SHORT).show()
                 } else {
-                    Log.e("Profile Update", "Gagal diperbarui: ${response.message()}")
+                    val errorBody = response.errorBody()?.string()
+                    Log.e("ProfileFragment", "Profile update failed: $errorBody")
+                    Toast.makeText(requireContext(), "Gagal memperbarui profil: ${response.message()}", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: retrofit2.Call<UserResponse>, t: Throwable) {
-                Log.e("Profile Update", "Kesalahan jaringan: ${t.message}")
+                Log.e("ProfileFragment", "Network error during profile update: ${t.message}")
+                Toast.makeText(requireContext(), "Kesalahan jaringan: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
 
-
     private fun setupActivityFactorDropdown() {
+        Log.d("ProfileFragment", "Setting up activity factor dropdown")
         val activityFactors = listOf("light", "normal", "hard")
-
-        // Membuat ArrayAdapter untuk AutoCompleteTextView
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, activityFactors)
-
-        // Menggunakan safe call untuk mengakses binding
         binding?.ActivityFactor?.setAdapter(adapter)
-
-        // Mengatur listener untuk menangani pilihan pengguna
-        binding?.ActivityFactor?.setOnItemClickListener { parent, view, position, id ->
-            val selectedItem = parent.getItemAtPosition(position).toString()
-            // Menampilkan pilihan yang dipilih, bisa disesuaikan dengan logika aplikasi
-            Toast.makeText(requireContext(), "Selected Activity: $selectedItem", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun loadUserProfile() {
-        val userProfile = sharedPrefsHelper.getUserProfile()
-
-        Log.d("UserProfile", "Loaded Profile: $userProfile")  // Log data profil yang diambil
-
-        binding?.apply {
-            tvProfileName.text = userProfile.fullName.takeIf { it.isNotEmpty() } ?: "Name not available"
-            tvProfileEmail.text = userProfile.email.takeIf { it.isNotEmpty() } ?: "Email not available"
-            tvBirthdate.text = "Birthdate: ${userProfile.birthdate.takeIf { it.isNotEmpty() } ?: "Not available"}"
-            tvWeight.text = "Weight: ${userProfile.weight} kg"
-            tvHeight.text = "Height: ${userProfile.height} cm"
-            tvGender.text = "Gender: ${userProfile.gender.takeIf { it.isNotEmpty() } ?: "Not specified"}"
-            ActivityFactor.setText(userProfile.activityFactor.takeIf { it.isNotEmpty() } ?: "Not specified")
-        }
     }
 
     private fun fetchUserProfile() {
         val token = sharedPrefsHelper.getToken() ?: ""
         val apiService = ApiConfig.getApiService()
 
+        Log.d("ProfileFragment", "Fetching user profile")
         apiService.getUserProfile("Bearer $token").enqueue(object : retrofit2.Callback<UserResponse> {
-            override fun onResponse(
-                call: retrofit2.Call<UserResponse>,
-                response: retrofit2.Response<UserResponse>
-            ) {
+            override fun onResponse(call: retrofit2.Call<UserResponse>, response: retrofit2.Response<UserResponse>) {
                 if (response.isSuccessful && response.body() != null) {
                     val userProfile = response.body()!!.data
+                    Log.d("ProfileFragment", "User profile fetched successfully: $userProfile")
+                    sharedPrefsHelper.saveUserId(userProfile!!.id)
 
-                    // Simpan ID pengguna ke SharedPreferences
-                    sharedPrefsHelper.saveUserId(userProfile.id)
-
-                    val userId = sharedPrefsHelper.getUserId()
-                    Log.d("User ID", "ID Pengguna: $userId")
-
-                    Toast.makeText(requireContext(), "ID Pengguna: ${userProfile.id}", Toast.LENGTH_SHORT).show()
-
-                    // Tampilkan data di UI
                     binding?.apply {
                         tvProfileName.text = userProfile.name
-                        tvProfileEmail.text = userProfile.email // Menampilkan email yang tidak bisa diedit
-                        tvBirthdate.text = "Birthdate: ${userProfile.birthdate}"
+                        tvProfileEmail.text = userProfile.email
+                        tvBirthdate.text = "Birthdate: ${userProfile.birthdate.split("T")[0]}"
                         tvWeight.text = "Weight: ${userProfile.weight} kg"
                         tvHeight.text = "Height: ${userProfile.height} cm"
                         tvGender.text = "Gender: ${userProfile.gender}"
-
                     }
-
-                    Log.d("UserProfile", "ID: ${userProfile.id}")
-                    Log.d("UserProfile", "Nama: ${userProfile.name}")
-
                 } else {
-                    Log.e("UserProfile", "Gagal mendapatkan profil: ${response.message()}")
+                    val errorBody = response.errorBody()?.string()
+                    Log.e("ProfileFragment", "Failed to fetch profile: $errorBody")
                 }
             }
 
             override fun onFailure(call: retrofit2.Call<UserResponse>, t: Throwable) {
-                Log.e("UserProfile", "Kesalahan jaringan: ${t.message}")
+                Log.e("ProfileFragment", "Network error during profile fetch: ${t.message}")
             }
         })
+    }
+
+    private fun showDatePickerDialog(editText: EditText) {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        Log.d("ProfileFragment", "Showing date picker dialog")
+        DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
+            val formattedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
+            editText.setText(formattedDate)
+            Log.d("ProfileFragment", "Date selected: $formattedDate")
+        }, year, month, day).show()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        Log.d("ProfileFragment", "View destroyed")
     }
 }
