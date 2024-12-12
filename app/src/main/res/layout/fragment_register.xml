@@ -24,6 +24,13 @@
         android:textSize="30sp"
         android:textStyle="bold" />
 
+    <ProgressBar
+        android:id="@+id/progressBarRegister"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
     <EditText
         android:id="@+id/editTextTextRegist"
         android:layout_width="330dp"

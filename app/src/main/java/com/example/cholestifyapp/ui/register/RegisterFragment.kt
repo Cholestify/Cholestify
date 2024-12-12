@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.cholestifyapp.R
 import com.example.cholestifyapp.data.retrofit.ApiService
 import com.example.cholestifyapp.data.retrofit.RetrofitClient
+import com.example.cholestifyapp.databinding.FragmentRegisterBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,6 +23,8 @@ class RegisterFragment : Fragment() {
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var registerButton: Button
+    private val binding get() = _binding!!
+    private var _binding: FragmentRegisterBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +46,8 @@ class RegisterFragment : Fragment() {
             if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(activity, "Name, Email, and Password are required", Toast.LENGTH_SHORT).show()
             } else {
+                // Tampilkan ProgressBar saat tombol ditekan
+                showLoading(true)
                 registerUser(name, email, password)
             }
         }
@@ -53,17 +58,22 @@ class RegisterFragment : Fragment() {
     private fun registerUser(name: String, email: String, password: String) {
         val apiService = RetrofitClient.instance.create(ApiService::class.java)
         val request = RegisterRequest(name, email, password)
-        val call = apiService.register(request)
 
+        // Tampilkan ProgressBar
+        showLoading(true)
+
+        val call = apiService.register(request)
         call.enqueue(object : Callback<RegisterResponse> {
             override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
+                // Sembunyikan ProgressBar
+                showLoading(false)
+
                 if (response.isSuccessful && response.body() != null) {
                     val registerResponse = response.body()
                     if (registerResponse != null && !registerResponse.error) {
-                        // Menampilkan Toast untuk sukses
                         Toast.makeText(activity, registerResponse.message, Toast.LENGTH_SHORT).show()
 
-                        // Pindahkan pengguna ke login atau halaman utama
+                        // Navigasi ke login
                         findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
                     } else {
                         Toast.makeText(activity, "Registration failed: ${registerResponse?.message}", Toast.LENGTH_SHORT).show()
@@ -74,8 +84,16 @@ class RegisterFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+                // Sembunyikan ProgressBar
+                showLoading(false)
+
                 Toast.makeText(activity, "Failed to connect to the server", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBarRegister.visibility = if (isLoading) View.VISIBLE else View.GONE
+        registerButton.isEnabled = !isLoading
     }
 }

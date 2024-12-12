@@ -40,7 +40,9 @@ class LoginFragment : Fragment() {
             if (email.isEmpty() || password.isEmpty()) {
                 showToast("Email and password are required")
             } else {
-                loginUser (email, password)
+                // Tampilkan ProgressBar saat tombol ditekan
+                showLoading(true)
+                loginUser(email, password)
             }
         }
 
@@ -58,13 +60,19 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
-    private fun loginUser (email: String, password: String) {
+    private fun loginUser(email: String, password: String) {
         val apiService = RetrofitClient.instance.create(ApiService::class.java)
         val request = LoginRequest(email, password)
-        val call = apiService.login(request)
 
+        // Tampilkan ProgressBar
+        showLoading(true)
+
+        val call = apiService.login(request)
         call.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                // Sembunyikan ProgressBar
+                showLoading(false)
+
                 if (response.isSuccessful && response.body() != null) {
                     val loginResponse = response.body()
                     if (loginResponse != null && !loginResponse.error) {
@@ -74,7 +82,6 @@ class LoginFragment : Fragment() {
 
                         val idUser = loginResponse.data?.userId ?: ""
                         sharedPrefsHelper.saveUserId(idUser as Int)
-
 
                         findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                     } else {
@@ -86,6 +93,9 @@ class LoginFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                // Sembunyikan ProgressBar
+                showLoading(false)
+
                 showToast("Failed to connect to the server")
             }
         })
@@ -93,6 +103,12 @@ class LoginFragment : Fragment() {
 
     private fun showToast(message: String) {
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBarLogin.visibility = if (isLoading) View.VISIBLE else View.GONE
+        // Nonaktifkan tombol login selama proses berjalan
+        binding.buttonlogin.isEnabled = !isLoading
     }
 
     override fun onDestroyView() {

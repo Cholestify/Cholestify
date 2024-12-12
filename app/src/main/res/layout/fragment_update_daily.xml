@@ -53,10 +53,14 @@
 
 
     <!-- Tombol Update Daily Food -->
+
+    <!-- ProgressBar -->
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_update_daily_food"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="323dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
         android:layout_marginBottom="88dp"
         android:backgroundTint="@color/green"
         android:text="@string/update_daily_food"
@@ -64,10 +68,9 @@
         app:cornerRadius="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.435"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- ProgressBar -->
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
