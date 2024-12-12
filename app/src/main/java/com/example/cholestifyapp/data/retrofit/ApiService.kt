@@ -1,11 +1,9 @@
 package com.example.cholestifyapp.data.retrofit
 
 
-import com.example.cholestifyapp.data.request.AddMealRequest
 import com.example.cholestifyapp.data.response.DailyNutritionResponse
-import com.example.cholestifyapp.data.response.DataMealFoodHistoryRespnose
+import com.example.cholestifyapp.data.response.FoodRecordResponse
 import com.example.cholestifyapp.data.response.FoodResponse
-import com.example.cholestifyapp.data.response.MealFoodHistoryResponse
 import com.example.cholestifyapp.data.response.UserResponse
 import com.example.cholestifyapp.ui.login.LoginRequest
 import com.example.cholestifyapp.ui.login.LoginResponse
@@ -37,6 +35,7 @@ interface ApiService {
         @Body profile: UpdateProfileRequest
     ): Call<UserResponse>
 
+
     @GET("users")
     fun getUserProfile(
         @Header("Authorization") token: String
@@ -50,12 +49,9 @@ interface ApiService {
         @Header("Authorization") token: String
     ): DailyNutritionResponse
 
-    @GET("mealFood/recentHistory")
-    fun getRecentMealHistory(
+    @GET("mealFood/recentNutritionHistory")
+    suspend fun getMealFoodNutrition(
         @Header("Authorization") token: String
-    ): Call<List<MealFoodHistoryResponse>>
+    ): FoodRecordResponse
 
-    // Endpoint untuk mengirimkan data makanan yang dipilih
-    @POST("mealFood")
-    fun sendDailyFoodUpdate(@Body selectedItems: List<AddMealRequest>): Call<DataMealFoodHistoryRespnose>
 }
