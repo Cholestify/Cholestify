@@ -50,37 +50,29 @@ class SharedPrefsHelper(context: Context) {
     // Menyimpan profil pengguna
     fun saveUserProfile(profile: UpdateProfileRequest) {
         val editor = sharedPreferences.edit()
-        editor.putString("firstName", profile.fullName)
+        editor.putString("name", profile.name)
+//        editor.putString("email", profile.email)
         editor.putString("birthdate", profile.birthdate)
-        editor.putInt("height", profile.height)
         editor.putInt("weight", profile.weight)
-//        editor.putFloat("bmi", profile.bmi.toFloat())
-        editor.putString("gender", profile.gender)  // Menyimpan gender
-        editor.putString("activityFactor", profile.activityFactor)
+        editor.putInt("height", profile.height)
+        editor.putString("gender", profile.gender)
+        editor.putString("activity", profile.activity)
         editor.apply()
     }
 
     fun getUserProfile(): UpdateProfileRequest {
-        val fullName = sharedPreferences.getString("firstName", "") ?: ""
-        val email = sharedPreferences.getString("email", "") ?: ""
-        val birthdate = sharedPreferences.getString("birthdate", "") ?: ""
-        val height = sharedPreferences.getInt("height", 0)
-        val weight = sharedPreferences.getInt("weight", 0)
-//        val bmi = sharedPreferences.getFloat("bmi", 0.0f).toDouble()
-        val gender = sharedPreferences.getString("gender", "") ?: ""  // Mengambil gender
-        val activityFactor = sharedPreferences.getString("activityFactor", "") ?: ""
-
         return UpdateProfileRequest(
-            fullName = fullName,
-            birthdate = birthdate,
-            height = height,
-            weight = weight,
-//            bmi = bmi,
-            email = email,
-            gender = gender,
-            activityFactor = "Not specified"
+            name = sharedPreferences.getString("name", "") ?: "",
+//            email = sharedPreferences.getString("email", "") ?: "",
+            birthdate = sharedPreferences.getString("birthdate", "") ?: "",
+            weight = sharedPreferences.getInt("weight", 0),
+            height = sharedPreferences.getInt("height", 0),
+            gender = sharedPreferences.getString("gender", "") ?: "",
+            activity = sharedPreferences.getString("activity", "") ?: ""
         )
     }
+
+
 
     // Fungsi tambahan untuk menyimpan nilai kolesterol
     fun saveCholesterolValue(cholesterolValue: Int) {
